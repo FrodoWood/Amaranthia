@@ -15,37 +15,42 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ParticleSystem clickEffect;
     [SerializeField] LayerMask clickableLayers;
 
-    float lookRotationSpeed = 8f;
-
     private PlayerState currentState;
 
+    [Header("Abilities")]
+    private BaseAbility currentAbility;
     public BaseAbility fireballAbility;
-
+    private bool castingAbility = false;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         input = new CustomActions();
-        AssignInputs();
+        //AssignInputs();
 
         fireballAbility = new FireballAbility();
     }
 
     private void Start()
     {
-        currentState = PlayerState.Moving;
+        currentState = PlayerState.NotCasting;
     }
     private void AssignInputs()
     {
-        input.Main.Move.performed += ctx => ClickToMove();
-        input.Main.Q.performed += ctx => useFireballAbility();
+        //input.Main.Move.performed += ctx => ClickToMove();
+        //input.Main.Q.performed += ctx => useFireballAbility();
 
     }
 
     private void changeState(PlayerState newState)
     {
         currentState = newState;
+    }
+
+    private void changeAbility(BaseAbility newAbility)
+    {
+        currentAbility = newAbility;
     }
     private void useFireballAbility()
     {
@@ -54,6 +59,10 @@ public class PlayerController : MonoBehaviour
     }
     private void ClickToMove()
     {
+        if (!input.Main.Move.triggered)
+        {
+            return;
+        }
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, clickableLayers))
         {
@@ -67,20 +76,67 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        faceMouse();
-        //switch (currentState)
-        //{
-        //    case PlayerState.Moving:
-        //        FaceTarget();
-        //        break;
-        //    case PlayerState.Casting:
-        //        faceMouse();
-        //        break;
-        //}
+        Debug.Log(currentState);
+        switch (currentState)
+        {
+            case PlayerState.NotCasting:
+                castingAbility = false;
+                ClickToMove();
+                checkAbilityTrigger();
+                agent.isStopped = false;
+                FaceNavMeshTarget();
+                break;
+
+            case PlayerState.Casting:
+                agent.isStopped = true;
+                if (castingAbility == false)
+                {
+                    faceMouse();
+                    currentAbility.TriggerAbility(this);
+                    StartCoroutine(waitXSecondsAndChangeState(1, PlayerState.NotCasting));
+                    castingAbility = true;
+                }
+                ClickToMove();
+                break;
+
+            case PlayerState.Dead:
+
+                break;
+        }
         //FaceTarget();
         //SetAnimations();
     }
-    private void FaceTarget()
+
+    private IEnumerator waitXSecondsAndChangeState(float amount, PlayerState newState)
+    {
+        Debug.Log("Waiting for " +  amount + " seconds");
+        yield return new WaitForSeconds(amount);
+        Debug.Log("Changing state to " + newState);
+        changeState(newState);
+    }
+
+    private void checkAbilityTrigger()
+    {
+        if (input.Main.Q.triggered)
+        {
+            changeState(PlayerState.Casting);
+            changeAbility(fireballAbility);
+        }
+        else if (input.Main.W.triggered)
+        {
+            changeState(PlayerState.Casting);
+        }
+        else if (input.Main.E.triggered)
+        {
+            changeState(PlayerState.Casting);
+        }
+        else if (input.Main.R.triggered)
+        {
+            changeState(PlayerState.Casting);
+        }
+    }
+
+    private void FaceNavMeshTarget()
     {
         if(agent.velocity != Vector3.zero)
         {

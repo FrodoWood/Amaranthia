@@ -48,7 +48,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""W"",
                     ""type"": ""Button"",
-                    ""id"": ""3fd18643-9886-4fc4-80b4-e2245203a709"",
+                    ""id"": ""78646536-65da-425d-b6d8-f61f84b0025d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -57,7 +57,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""E"",
                     ""type"": ""Button"",
-                    ""id"": ""f9e66fe5-0637-46cf-b05b-6cb6695e0e95"",
+                    ""id"": ""0d967c3a-5ed2-4054-893b-8d910bb08f79"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -66,7 +66,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""R"",
                     ""type"": ""Button"",
-                    ""id"": ""5a5f7934-a6e9-4230-a3f9-21f89705fa1a"",
+                    ""id"": ""a8388aa5-4cc8-44b3-9593-814e8cd80b52"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -98,7 +98,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7803de75-d7fc-45cf-bced-66be757117cf"",
+                    ""id"": ""15166e06-5ed8-4cb5-a66e-1477fdd97bf1"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -109,7 +109,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""50d61043-883a-48a9-892b-f66bd6c6fa14"",
+                    ""id"": ""234c2d4c-6e92-49e2-b0e5-a5ca842ec7a9"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -120,7 +120,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""86927ff8-7401-4f7c-9204-e3d766cd05cb"",
+                    ""id"": ""0e965479-8619-42dc-a4fa-be2c79db5fa3"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
