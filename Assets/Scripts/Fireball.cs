@@ -20,5 +20,13 @@ public class Fireball : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+        if(damageable != null)
+        {
+            damageable.takeDamage(10f);
+        }
+
+        Destroy(gameObject);
     }
 }
