@@ -20,7 +20,9 @@ public class PlayerController : MonoBehaviour
     [Header("Abilities")]
     private BaseAbility currentAbility;
     public BaseAbility fireballAbility;
+
     private bool castingAbility = false;
+    public GameObject fireballPrefab;
 
     private void Awake()
     {
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 {
                     faceMouse();
                     currentAbility.TriggerAbility(this);
-                    StartCoroutine(waitXSecondsAndChangeState(1, PlayerState.NotCasting));
+                    StartCoroutine(waitXSecondsAndChangeState(0.3f, PlayerState.NotCasting));
                     castingAbility = true;
                 }
                 ClickToMove();

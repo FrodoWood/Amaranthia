@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FireballAbility : BaseAbility
 {
-    public GameObject fireballPrefab;
+    private float fireballSpeed = 15f;
+
     public FireballAbility()
     {
         abilityName = "Fireball";
@@ -14,6 +15,10 @@ public class FireballAbility : BaseAbility
     public override void TriggerAbility(PlayerController player)
     {
         Debug.Log(abilityName + " ability used!");
-
+        GameObject fireball = GameObject.Instantiate(player.fireballPrefab, player.transform.position + 1.04f * player.transform.forward, Quaternion.identity);
+        Vector3 direction = player.transform.forward;
+        Rigidbody fireballRigidbody = fireball.GetComponent<Rigidbody>();
+        fireballRigidbody?.AddForce(direction * fireballSpeed, ForceMode.Impulse);
+        GameObject.Destroy(fireball, 2f);
     }
 }
