@@ -27,6 +27,6 @@ public class Fireball : MonoBehaviour
             damageable.takeDamage(10f);
         }
 
-        Destroy(gameObject);
+        Destroy(gameObject,4f);
     }
 }
