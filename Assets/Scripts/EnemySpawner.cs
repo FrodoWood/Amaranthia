@@ -1,28 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, IDamageable
 {
     [SerializeReference]
     private EnemySpawnerState currentState;
 
-    [System.Serializable]
-    public class EnemyToSpawn
-    {
-        public GameObject prefab;
-        public int amount;
-    }
 
     public List<EnemyToSpawn> enemiesToSpawn;
     private bool isSpawning = false;
     private bool isIdleing = false;
+    private bool isDestroyed = false;
+    private bool isRespawning = false;
+
     [SerializeField] private float spawnInterval = 1f;
-    [SerializeField] private float idleInterval = 5f;
+    [SerializeField] private float idleTimer = 5f;
+    [SerializeField] private float respawnTimer = 3f;
+    [SerializeField] private float health = 50f;
+    [SerializeField] private float destroyedTimer = 10f;
+
+    private MeshRenderer meshRenderer;
+    public Material idleMaterial;
+    public Material spawningMaterial;
+    public Material destroyedMaterial;
+    public Material respawningMaterial;
+
 
     void Start()
     {
-        currentState = EnemySpawnerState.Idle;
+        meshRenderer = GetComponent<MeshRenderer>();
+        changeState(EnemySpawnerState.Idle);
     }
 
     void Update()
@@ -30,27 +39,18 @@ public class EnemySpawner : MonoBehaviour
         switch (currentState)
         {
             case EnemySpawnerState.Idle:
-                if (!isIdleing)
-                {
-                    isIdleing = true;
-                    StartCoroutine(WaitSecondsAndChangeState(idleInterval, EnemySpawnerState.Spawning));
-                }
+                
                 break;
 
             case EnemySpawnerState.Spawning:
-                if (!isSpawning)
-                {
-                    isSpawning = true;
-                    StartCoroutine(SpawnEnemyAtInterval(spawnInterval));
-                    changeState(EnemySpawnerState.Idle);
-                }
+                
                 break;
 
             case EnemySpawnerState.Respawning:
 
                 break;
             case EnemySpawnerState.Destroyed:
-
+                
                 break;
             default:
 
@@ -58,31 +58,108 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void changeState(EnemySpawnerState newState) { currentState = newState; }
+    public void changeState(EnemySpawnerState newState) {
+        onExitCurrentState();
+        currentState = newState;
+        OnEnterCurrentState();
+    }
+
+    private void OnEnterCurrentState()
+    {
+        switch (currentState)
+        {
+            case EnemySpawnerState.Idle:
+                isIdleing = true;
+                StartCoroutine(WaitSecondsAndChangeState(idleTimer, EnemySpawnerState.Spawning));
+                meshRenderer.material = idleMaterial;
+                break;
+
+            case EnemySpawnerState.Spawning:
+                isSpawning = true;
+                StartCoroutine(SpawnEnemyAtIntervalAndChangeState(spawnInterval, EnemySpawnerState.Idle));
+                meshRenderer.material = spawningMaterial;
+                break;
+
+            case EnemySpawnerState.Respawning:
+                isRespawning = true;
+                StartCoroutine(WaitSecondsAndChangeState(respawnTimer, EnemySpawnerState.Idle));
+                meshRenderer.material = respawningMaterial;
+                break;
+
+            case EnemySpawnerState.Destroyed:
+                isDestroyed = true;
+                StopAllCoroutines();
+                meshRenderer.material = destroyedMaterial;
+                StartCoroutine(WaitSecondsAndChangeState(destroyedTimer, EnemySpawnerState.Respawning));
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void onExitCurrentState()
+    {
+        switch (currentState)
+        {
+            case EnemySpawnerState.Idle:
+                isIdleing = false;
+                break;
+            case EnemySpawnerState.Spawning:
+                isSpawning = false;
+                break;
+            case EnemySpawnerState.Respawning:
+                isRespawning = false;
+                health = 50f;
+                break;
+            case EnemySpawnerState.Destroyed:
+                isDestroyed = false;
+                break;
+            default:
+                break;
+        }
+    }
 
     [ContextMenu("Spawn Enemies")]
     public void SpawnEnemies()
     {
-        StartCoroutine(SpawnEnemyAtInterval(spawnInterval));
+        StartCoroutine(SpawnEnemyAtIntervalAndChangeState(spawnInterval, EnemySpawnerState.Idle));
     }
-    private IEnumerator SpawnEnemyAtInterval(float interval)
+    private IEnumerator SpawnEnemyAtIntervalAndChangeState(float interval, EnemySpawnerState newState)
     {
-        foreach (var enemy in enemiesToSpawn)
+        if (enemiesToSpawn != null)
         {
-            for (int i = 0; i < enemy.amount; i++)
+            foreach (var enemy in enemiesToSpawn)
             {
-                Instantiate(enemy.prefab, transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(2);
+                for (int i = 0; i < enemy.amount; i++)
+                {
+                    Instantiate(enemy.prefab, transform.position, Quaternion.identity);
+                    yield return new WaitForSeconds(interval);
+                }
             }
         }
-        isSpawning = false;
+        yield return new WaitForSeconds(interval);
+        changeState(newState);
     }
 
     private IEnumerator WaitSecondsAndChangeState(float seconds, EnemySpawnerState newState)
     {
         yield return new WaitForSeconds(seconds);
         changeState(newState);
-        isIdleing = false;
+    }
+
+    public void takeDamage(float amount)
+    {
+        if(currentState != EnemySpawnerState.Respawning)
+        {
+            health -= amount;
+            health = Mathf.Max(health, 0);
+        }
+        if (health <= 0 && currentState != EnemySpawnerState.Destroyed && currentState != EnemySpawnerState.Respawning)
+        {
+            changeState(EnemySpawnerState.Destroyed);
+        }
     }
 }
 
@@ -93,4 +170,11 @@ public enum EnemySpawnerState
     Spawning,
     Respawning,
     Destroyed
+}
+
+[System.Serializable]
+public class EnemyToSpawn
+{
+    public GameObject prefab;
+    public int amount;
 }
