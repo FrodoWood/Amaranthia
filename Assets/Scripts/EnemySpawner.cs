@@ -15,6 +15,10 @@ public class EnemySpawner : MonoBehaviour
     }
 
     public List<EnemyToSpawn> enemiesToSpawn;
+    private bool isSpawning = false;
+    private bool isIdleing = false;
+    [SerializeField] private float spawnInterval = 1f;
+    [SerializeField] private float idleInterval = 5f;
 
     void Start()
     {
@@ -26,11 +30,20 @@ public class EnemySpawner : MonoBehaviour
         switch (currentState)
         {
             case EnemySpawnerState.Idle:
-
+                if (!isIdleing)
+                {
+                    isIdleing = true;
+                    StartCoroutine(WaitSecondsAndChangeState(idleInterval, EnemySpawnerState.Spawning));
+                }
                 break;
 
             case EnemySpawnerState.Spawning:
-
+                if (!isSpawning)
+                {
+                    isSpawning = true;
+                    StartCoroutine(SpawnEnemyAtInterval(spawnInterval));
+                    changeState(EnemySpawnerState.Idle);
+                }
                 break;
 
             case EnemySpawnerState.Respawning:
@@ -50,16 +63,29 @@ public class EnemySpawner : MonoBehaviour
     [ContextMenu("Spawn Enemies")]
     public void SpawnEnemies()
     {
-        foreach(var enemy in enemiesToSpawn)
+        StartCoroutine(SpawnEnemyAtInterval(spawnInterval));
+    }
+    private IEnumerator SpawnEnemyAtInterval(float interval)
+    {
+        foreach (var enemy in enemiesToSpawn)
         {
-            if (enemy.prefab == null) return;
-            for(int i = 0; i < enemy.amount; i++)
+            for (int i = 0; i < enemy.amount; i++)
             {
                 Instantiate(enemy.prefab, transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(2);
             }
         }
+        isSpawning = false;
+    }
+
+    private IEnumerator WaitSecondsAndChangeState(float seconds, EnemySpawnerState newState)
+    {
+        yield return new WaitForSeconds(seconds);
+        changeState(newState);
+        isIdleing = false;
     }
 }
+
 
 public enum EnemySpawnerState
 {
