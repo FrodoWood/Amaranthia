@@ -11,7 +11,7 @@ public class Fireball : MonoBehaviour
 
     void Update()
     {
-        
+        Destroy(gameObject, 4f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -27,6 +27,6 @@ public class Fireball : MonoBehaviour
             damageable.takeDamage(10f);
         }
 
-        Destroy(gameObject,4f);
+        Destroy(gameObject);
     }
 }

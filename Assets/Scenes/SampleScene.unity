@@ -1631,12 +1631,12 @@ PrefabInstance:
     - target: {fileID: 3570474827820469697, guid: 2f9d75aff5e69e54f975a953849d1380,
         type: 3}
       propertyPath: enemiesToSpawn.Array.data[0].amount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3570474827820469697, guid: 2f9d75aff5e69e54f975a953849d1380,
         type: 3}
       propertyPath: enemiesToSpawn.Array.data[1].amount
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5332615387969721032, guid: 2f9d75aff5e69e54f975a953849d1380,
         type: 3}

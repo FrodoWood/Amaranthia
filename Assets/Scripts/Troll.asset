@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Troll
   m_EditorClassIdentifier: 
   enemyName: Troll
-  maxHealth: 100
+  maxHealth: 20
   moveSpeed: 5
   damage: 10

@@ -10,10 +10,10 @@ public class EnemySpawner : MonoBehaviour, IDamageable
 
 
     public List<EnemyToSpawn> enemiesToSpawn;
-    private bool isSpawning = false;
-    private bool isIdleing = false;
-    private bool isDestroyed = false;
-    private bool isRespawning = false;
+    private bool isSpawning;
+    private bool isIdleing;
+    private bool isDestroyed;
+    private bool isRespawning;
 
     [SerializeField] private float spawnInterval = 1f;
     [SerializeField] private float idleTimer = 5f;
@@ -31,6 +31,10 @@ public class EnemySpawner : MonoBehaviour, IDamageable
     void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
+        isSpawning = false;
+        isIdleing = false;
+        isDestroyed = false;
+        isRespawning = false;
         changeState(EnemySpawnerState.Idle);
     }
 
