@@ -42,7 +42,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         agent.SetDestination(player.position);
     }
 
-    public void takeDamage(float amount)
+    public void TakeDamage(float amount)
     {
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);

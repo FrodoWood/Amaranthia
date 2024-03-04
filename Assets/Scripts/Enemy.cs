@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum EnemyState
 {
@@ -15,12 +16,39 @@ public enum EnemyState
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
     protected EnemyState currentState;
+
+    protected string enemyName;
+    public EnemyData enemyData;
+    protected Transform player;
+    protected NavMeshAgent agent;
+    protected float currentHealth;
+    protected float maxHealth;
+    protected float damage;
     protected float visionRange;
 
     protected virtual void Start()
     {
         ChangeState(EnemyState.Idle);
+        agent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        
+        // Setting scriptable object enemy data values
+        enemyName = enemyData.name;
+        maxHealth = enemyData.maxHealth;
+        damage = enemyData.damage;
+        agent.speed = enemyData.moveSpeed;
+        
+        currentHealth = maxHealth;
+        visionRange = enemyData.visionRange;
     }
+
+    protected virtual void ChangeState(EnemyState newState)
+    {
+        OnExitState(currentState);
+        currentState = newState;
+        OnEnterState(currentState);
+    }
+
     protected virtual void Update()
     {
         switch (currentState)
@@ -45,18 +73,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected abstract void UpdateIdle();
     protected abstract void UpdateAttacking();
     protected abstract void UpdatePatrolling();
-    protected virtual void UpdateChasing()
-    {
-
-    }
+    protected abstract void UpdateChasing();
     protected abstract void UpdateDead();
 
-    protected virtual void ChangeState(EnemyState newState)
-    {
-        OnExitState(currentState);
-        currentState = newState;
-        OnEnterState(currentState);
-    }
+    
 
     protected virtual void OnEnterState(EnemyState currentState)
     {
@@ -81,7 +101,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     }
 
     protected abstract void OnEnterDead();
-    protected abstract void OnEnterChasing();
+    protected virtual void OnEnterChasing()
+    {
+        agent.SetDestination(player.position);
+    }
     protected abstract void OnEnterPatrolling();
     protected abstract void OnEnterAttacking();
     protected abstract void OnEnterIdle();
@@ -114,5 +137,40 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected abstract void OnExitAttacking();
     protected abstract void OnExitIdle();
 
-    public abstract void takeDamage(float amount);
+    public virtual void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        currentHealth = Mathf.Max(currentHealth, 0);
+        Debug.Log($"{enemyName} has taken {amount} damage!");
+
+        if (currentHealth == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public virtual void AttackPlayer()
+    {
+        float distance = Vector3.Distance(transform.position, player.position);
+        if (distance <= 2f)
+        {
+            Debug.Log($"{enemyName} has attacked the player!");
+        }
+    }
+
+    protected virtual float DistanceToPlayer()
+    {
+        return Vector3.Distance(transform.position, player.position);
+    }
+
+    protected virtual bool PlayerInRange()
+    {
+        return DistanceToPlayer() <= visionRange;
+    }
+
+    protected IEnumerator ChangeStateAfter(EnemyState newState,float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        ChangeState(newState);
+    }
 }

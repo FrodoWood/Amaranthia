@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         switch (currentState)
         {
             case PlayerState.NotCasting:
