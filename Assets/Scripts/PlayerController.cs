@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.AI;
 using System;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     CustomActions input;
     NavMeshAgent agent;
@@ -20,9 +20,13 @@ public class PlayerController : MonoBehaviour
     [Header("Abilities")]
     private BaseAbility currentAbility;
     public BaseAbility fireballAbility;
-
     private bool castingAbility = false;
     public GameObject fireballPrefab;
+
+    [Header("Health")]
+    [SerializeField] private float currentHealth;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float damage;
 
     private void Awake()
     {
@@ -37,6 +41,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         currentState = PlayerState.NotCasting;
+
+        currentHealth = maxHealth;
     }
     private void AssignInputs()
     {
@@ -45,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void changeState(PlayerState newState)
+    private void ChangeState(PlayerState newState)
     {
         currentState = newState;
     }
@@ -102,6 +108,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PlayerState.Dead:
+                agent.enabled = false;
 
                 break;
         }
@@ -114,27 +121,27 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Waiting for " +  amount + " seconds");
         yield return new WaitForSeconds(amount);
         Debug.Log("Changing state to " + newState);
-        changeState(newState);
+        ChangeState(newState);
     }
 
     private void checkAbilityTrigger()
     {
         if (input.Main.Q.triggered)
         {
-            changeState(PlayerState.Casting);
+            ChangeState(PlayerState.Casting);
             changeAbility(fireballAbility);
         }
         else if (input.Main.W.triggered)
         {
-            changeState(PlayerState.Casting);
+            ChangeState(PlayerState.Casting);
         }
         else if (input.Main.E.triggered)
         {
-            changeState(PlayerState.Casting);
+            ChangeState(PlayerState.Casting);
         }
         else if (input.Main.R.triggered)
         {
-            changeState(PlayerState.Casting);
+            ChangeState(PlayerState.Casting);
         }
     }
 
@@ -175,4 +182,16 @@ public class PlayerController : MonoBehaviour
         input.Disable();
     }
 
+    public void TakeDamage(float amount, EntityType entityType)
+    {
+        if (entityType == EntityType.Allied) return;
+        currentHealth -= amount;
+        currentHealth = Mathf.Max(currentHealth, 0);
+        Debug.Log($"Player has taken {amount} damage!");
+
+        if (currentHealth == 0)
+        {
+            ChangeState(PlayerState.Dead);
+        }
+    }
 }

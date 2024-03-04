@@ -42,8 +42,9 @@ public class EnemyController : MonoBehaviour, IDamageable
         agent.SetDestination(player.position);
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, EntityType entityType)
     {
+        if (entityType == EntityType.Enemy) return;
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
         Debug.Log($"{enemyName} has taken {amount} damage!");

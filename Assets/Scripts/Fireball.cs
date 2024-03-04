@@ -24,7 +24,7 @@ public class Fireball : MonoBehaviour
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         if(damageable != null)
         {
-            damageable.TakeDamage(10f);
+            damageable.TakeDamage(10f, EntityType.Allied);
         }
 
         Destroy(gameObject);

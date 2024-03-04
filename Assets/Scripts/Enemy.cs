@@ -21,16 +21,21 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public EnemyData enemyData;
     protected Transform player;
     protected NavMeshAgent agent;
-    protected float currentHealth;
-    protected float maxHealth;
-    protected float damage;
-    protected float visionRange;
+    [SerializeField] protected float currentHealth;
+    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float damage;
+    [SerializeField] protected float visionRange;
+    protected Vector3 lastKnownPlayerPosition;
 
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
+
+    }
     protected virtual void Start()
     {
         ChangeState(EnemyState.Idle);
-        agent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         
         // Setting scriptable object enemy data values
         enemyName = enemyData.name;
@@ -104,6 +109,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected virtual void OnEnterChasing()
     {
         agent.SetDestination(player.position);
+        lastKnownPlayerPosition = player.position;
     }
     protected abstract void OnEnterPatrolling();
     protected abstract void OnEnterAttacking();
@@ -137,8 +143,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected abstract void OnExitAttacking();
     protected abstract void OnExitIdle();
 
-    public virtual void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount, EntityType entityType)
     {
+        if (entityType == EntityType.Enemy) return;
+
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
         Debug.Log($"{enemyName} has taken {amount} damage!");

@@ -153,8 +153,9 @@ public class EnemySpawner : MonoBehaviour, IDamageable
         changeState(newState);
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, EntityType entityType)
     {
+        if (entityType == EntityType.Enemy) return;
         if(currentState != EnemySpawnerState.Respawning)
         {
             health -= amount;
