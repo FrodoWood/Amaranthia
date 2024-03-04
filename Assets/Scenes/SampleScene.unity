@@ -893,6 +893,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 88404281be561874d9535b1fa47d66bf, type: 2}
+  patrolRadius: 15
+  perlinScale: 0.2
 --- !u!136 &419374020
 CapsuleCollider:
   m_ObjectHideFlags: 0
