@@ -14,14 +14,15 @@ public class SimpleEnemy : Enemy
     protected override void Start()
     {
         base.Start();
-        spawnPosition = transform.position;
+        spawnPosition = transform.position + Random.insideUnitSphere * 2;
+        canAttack = true;
     }
     protected override void Update()
     {
         base.Update();
     }
     
-
+    //IDLE
     protected override void OnEnterIdle()
     {
         Debug.Log($"{enemyName} Entered Idle");
@@ -41,7 +42,7 @@ public class SimpleEnemy : Enemy
         Debug.Log($"{enemyName} Exited Idle");
     }
 
-
+    //PATROLLING
     protected override void OnEnterPatrolling()
     {
         Debug.Log($"{enemyName} Entered Patrolling");
@@ -65,21 +66,40 @@ public class SimpleEnemy : Enemy
         agent.ResetPath();
     }
     
-    
+    //ATTACKING
     protected override void OnEnterAttacking()
     {
-
+        Debug.Log($"{enemyName} Entered Attacking");
+        agent.ResetPath();
+        // play attack animation
     }
     protected override void UpdateAttacking()
     {
-        
+        if (canAttack)
+        {
+            AttackPlayer();
+            canAttack = false;
+            StartCoroutine(ResetAttack());
+        }
+
+        if (PlayerInRange() && DistanceToPlayer() > attackRange)
+        {
+            ChangeState(EnemyState.Chasing);
+            return;
+        }
+
+        if (!PlayerInRange())
+        {
+            ChangeState(EnemyState.Patrolling);
+            return;
+        }
     }
     protected override void OnExitAttacking()
     {
 
     }
 
-
+    //CHASING
     protected override void OnEnterChasing()
     {
         base.OnEnterChasing();
@@ -90,12 +110,20 @@ public class SimpleEnemy : Enemy
         {
             lastKnownPlayerPosition = player.position;
             agent.SetDestination(lastKnownPlayerPosition);
+
+            if (DistanceToPlayer() <= attackRange)
+            {
+                ChangeState(EnemyState.Attacking);
+                return;
+            }
         }
         // If the player is out of range => the enemy should go to the last known position of the player and then switch to idle
         if (!PlayerInRange() && (agent.remainingDistance - agent.stoppingDistance) < 0.5f)
         {
             ChangeState(EnemyState.Idle);
+            return;
         }
+        
 
     }
     protected override void OnExitChasing()
@@ -103,6 +131,7 @@ public class SimpleEnemy : Enemy
 
     }
 
+    //DEAD
     protected override void OnEnterDead()
     {
         Debug.Log($"{enemyName} Entered Dead");
@@ -126,6 +155,11 @@ public class SimpleEnemy : Enemy
         base.TakeDamage(amount, entityType);
     }
 
+    private IEnumerator ResetAttack()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
+    }
     private Vector3 GetRandomNavMeshWayPoint(Vector3 centre, float radius)
     {
         //Vector3 randomDir = Random.insideUnitSphere * radius;
@@ -145,7 +179,7 @@ public class SimpleEnemy : Enemy
         return Vector3.Lerp(perlinDireciton, directionBias, 0.4f);
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         //Gizmos.color = new Color(0f, 1f, 0f, 0.3f);
         switch (currentState)
@@ -162,4 +196,5 @@ public class SimpleEnemy : Enemy
         }
         Gizmos.DrawSphere(transform.position, visionRange);
     }
+
 }

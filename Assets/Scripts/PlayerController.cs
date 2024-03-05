@@ -35,13 +35,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         input = new CustomActions();
         //AssignInputs();
 
-        fireballAbility = new FireballAbility();
     }
 
     private void Start()
     {
+        fireballAbility = new FireballAbility();
         currentState = PlayerState.NotCasting;
-
+        currentAbility = fireballAbility;
         currentHealth = maxHealth;
     }
     private void AssignInputs()
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (castingAbility == false)
                 {
                     faceMouse();
-                    currentAbility.TriggerAbility(this);
+                    currentAbility?.TriggerAbility(this);
                     StartCoroutine(waitXSecondsAndChangeState(0.3f, PlayerState.NotCasting));
                     castingAbility = true;
                 }
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             Vector3 direction = (agent.destination - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            transform.rotation = lookRotation;
+            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 35f * Time.deltaTime);
         }
     }
 

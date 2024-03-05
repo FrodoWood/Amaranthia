@@ -25,6 +25,9 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float damage;
     [SerializeField] protected float visionRange;
+    [SerializeField] protected float attackRange;
+    [SerializeField] protected float attackCooldown;
+    [SerializeField] protected bool canAttack;
     protected Vector3 lastKnownPlayerPosition;
 
     private void Awake()
@@ -35,7 +38,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     }
     protected virtual void Start()
     {
-        ChangeState(EnemyState.Idle);
+        ChangeState(EnemyState.Patrolling);
         
         // Setting scriptable object enemy data values
         enemyName = enemyData.name;
@@ -160,9 +163,14 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public virtual void AttackPlayer()
     {
         float distance = Vector3.Distance(transform.position, player.position);
-        if (distance <= 2f)
+        if (distance <= attackRange)
         {
             Debug.Log($"{enemyName} has attacked the player!");
+            IDamageable damageable = player.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(damage, EntityType.Enemy);
+            }
         }
     }
 
