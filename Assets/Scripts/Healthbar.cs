@@ -7,6 +7,7 @@ public class Healthbar : MonoBehaviour
 {
     [SerializeField] private Image healthbarSprite;
     private Camera cam;
+    [SerializeField] bool isHudHealthbar;
 
     private void Start()
     {
@@ -20,7 +21,9 @@ public class Healthbar : MonoBehaviour
 
     private void LateUpdate()
     {
-        //transform.rotation = Quaternion.LookRotation(transform.position - cam.transform.position);
-        transform.rotation = cam.transform.rotation;
+        if (!isHudHealthbar)
+        {
+            transform.rotation = cam.transform.rotation;
+        }
     }
 }

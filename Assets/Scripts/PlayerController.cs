@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float damage;
 
     [SerializeField] private Healthbar healthbar;
+    [SerializeField] private Healthbar hudHealthbar;
 
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         currentAbility = fireballAbility;
         currentHealth = maxHealth;
         healthbar.UpdateHealthbar(maxHealth, currentHealth);
+        hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
     }
     private void AssignInputs()
     {
@@ -193,6 +195,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         //Update UI
         healthbar.UpdateHealthbar(maxHealth, currentHealth);
+        hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
 
         Debug.Log($"Player has taken {amount} damage!");
 
