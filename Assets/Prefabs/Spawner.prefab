@@ -127,10 +127,10 @@ MonoBehaviour:
       type: 3}
     amount: 5
   spawnInterval: 1
-  idleTimer: 5
+  idleTimer: 15
   respawnTimer: 3
   health: 50
-  destroyedTimer: 10
+  destroyedTimer: 20
   idleMaterial: {fileID: 2100000, guid: 6a71c59a6e09e18449c7df6ed106ffc8, type: 2}
   spawningMaterial: {fileID: 2100000, guid: edf3007991a7ba742a5bc71036e5aa99, type: 2}
   destroyedMaterial: {fileID: 2100000, guid: 370495808916ab3498ad3cfb1f78b4a7, type: 2}
