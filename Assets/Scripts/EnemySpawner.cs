@@ -20,6 +20,7 @@ public class EnemySpawner : MonoBehaviour, IDamageable
     [SerializeField] private float respawnTimer = 3f;
     [SerializeField] private float health = 50f;
     [SerializeField] private float destroyedTimer = 10f;
+    [SerializeField] private Transform spawnPoint;
 
     private MeshRenderer meshRenderer;
     public Material idleMaterial;
@@ -138,7 +139,7 @@ public class EnemySpawner : MonoBehaviour, IDamageable
             {
                 for (int i = 0; i < enemy.amount; i++)
                 {
-                    Instantiate(enemy.prefab, transform.position, Quaternion.identity);
+                    Instantiate(enemy.prefab, spawnPoint.position, Quaternion.identity);
                     yield return new WaitForSeconds(interval);
                 }
             }

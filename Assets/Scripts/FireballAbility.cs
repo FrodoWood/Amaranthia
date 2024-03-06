@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireballAbility : BaseAbility
 {
-    private float fireballSpeed = 15f;
+    private float fireballSpeed = 25f;
 
     public FireballAbility()
     {
