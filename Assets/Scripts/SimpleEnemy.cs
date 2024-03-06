@@ -141,8 +141,9 @@ public class SimpleEnemy : Enemy
         Debug.Log($"{enemyName} Entered Dead");
         animator.SetTrigger("Dead");
         agent.enabled = false;
+        collider.enabled = false;
         StopAllCoroutines();
-        Destroy(gameObject);
+        Destroy(gameObject,3f);
     }
     protected override void UpdateDead()
     {

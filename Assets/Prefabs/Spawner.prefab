@@ -28,9 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5332615387969721032}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071069, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 8.24, y: 1.26, z: 9.43}
-  m_LocalScale: {x: 2.5465, y: 0.51272494, z: 1.3249885}
+  m_LocalScale: {x: 2.9199874, y: 2.7645984, z: 2.5538995}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -123,15 +123,15 @@ MonoBehaviour:
   - prefab: {fileID: 3358375874516158943, guid: 003f1665d58f8234b9d809588f9c7045,
       type: 3}
     amount: 2
-  - prefab: {fileID: 5888756440267137249, guid: cc459a39d40e28d40b5884e3d0271206,
+  - prefab: {fileID: 6942381929336877415, guid: e0df83bdda171e4408c77b2d46158aa7,
       type: 3}
-    amount: 6
+    amount: 5
   spawnInterval: 1
   idleTimer: 5
   respawnTimer: 3
   health: 50
   destroyedTimer: 10
-  idleMaterial: {fileID: 0}
-  spawningMaterial: {fileID: 0}
-  destroyedMaterial: {fileID: 0}
-  respawningMaterial: {fileID: 0}
+  idleMaterial: {fileID: 2100000, guid: 6a71c59a6e09e18449c7df6ed106ffc8, type: 2}
+  spawningMaterial: {fileID: 2100000, guid: edf3007991a7ba742a5bc71036e5aa99, type: 2}
+  destroyedMaterial: {fileID: 2100000, guid: 370495808916ab3498ad3cfb1f78b4a7, type: 2}
+  respawningMaterial: {fileID: 2100000, guid: 94e3eadfea42d714ab6a4e939acce0ac, type: 2}
