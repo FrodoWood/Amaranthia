@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float maxHealth;
     [SerializeField] private float damage;
 
+    [SerializeField] private Healthbar healthbar;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -43,6 +45,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         currentState = PlayerState.NotCasting;
         currentAbility = fireballAbility;
         currentHealth = maxHealth;
+        healthbar.UpdateHealthbar(maxHealth, currentHealth);
     }
     private void AssignInputs()
     {
@@ -187,6 +190,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (entityType == EntityType.Allied) return;
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
+
+        //Update UI
+        healthbar.UpdateHealthbar(maxHealth, currentHealth);
+
         Debug.Log($"Player has taken {amount} damage!");
 
         if (currentHealth == 0)
