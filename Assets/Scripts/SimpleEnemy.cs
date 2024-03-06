@@ -26,6 +26,7 @@ public class SimpleEnemy : Enemy
     protected override void OnEnterIdle()
     {
         Debug.Log($"{enemyName} Entered Idle");
+        animator.SetTrigger("Idle");
         agent.ResetPath();
         StartCoroutine(ChangeStateAfter(EnemyState.Patrolling, 2f));
     }
@@ -46,6 +47,7 @@ public class SimpleEnemy : Enemy
     protected override void OnEnterPatrolling()
     {
         Debug.Log($"{enemyName} Entered Patrolling");
+        animator.SetTrigger("Patrolling");
         agent.isStopped = false;
         //agent.SetDestination(GetRandomNavMeshWayPoint(transform.position, 30f));
         //StartCoroutine(ChangeStateAfter(EnemyState.Idle, 2f));
@@ -75,9 +77,10 @@ public class SimpleEnemy : Enemy
     }
     protected override void UpdateAttacking()
     {
-        if (canAttack)
+        if (canAttack && DistanceToPlayer() <= attackRange)
         {
-            AttackPlayer();
+            animator.SetTrigger("Attacking");
+            //AttackPlayer();
             canAttack = false;
             StartCoroutine(ResetAttack());
         }
@@ -103,6 +106,7 @@ public class SimpleEnemy : Enemy
     protected override void OnEnterChasing()
     {
         base.OnEnterChasing();
+        animator.SetTrigger("Chasing");
     }
     protected override void UpdateChasing()
     {
@@ -135,6 +139,7 @@ public class SimpleEnemy : Enemy
     protected override void OnEnterDead()
     {
         Debug.Log($"{enemyName} Entered Dead");
+        animator.SetTrigger("Dead");
         agent.enabled = false;
         StopAllCoroutines();
         Destroy(gameObject);
@@ -153,6 +158,7 @@ public class SimpleEnemy : Enemy
     public override void TakeDamage(float amount, EntityType entityType)
     {
         base.TakeDamage(amount, entityType);
+
     }
 
     private IEnumerator ResetAttack()

@@ -21,6 +21,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public EnemyData enemyData;
     protected Transform player;
     protected NavMeshAgent agent;
+    protected Animator animator;
+
     [SerializeField] protected float currentHealth;
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float damage;
@@ -34,6 +36,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
     }
     protected virtual void Start()

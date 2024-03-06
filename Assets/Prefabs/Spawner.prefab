@@ -120,9 +120,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   enemiesToSpawn:
-  - prefab: {fileID: 5888756440267137249, guid: b39cc49afaf2f9347a0d4e0ee54c6dbe,
+  - prefab: {fileID: 3358375874516158943, guid: 003f1665d58f8234b9d809588f9c7045,
       type: 3}
     amount: 2
   - prefab: {fileID: 5888756440267137249, guid: cc459a39d40e28d40b5884e3d0271206,
       type: 3}
     amount: 6
+  spawnInterval: 1
+  idleTimer: 5
+  respawnTimer: 3
+  health: 50
+  destroyedTimer: 10
+  idleMaterial: {fileID: 0}
+  spawningMaterial: {fileID: 0}
+  destroyedMaterial: {fileID: 0}
+  respawningMaterial: {fileID: 0}
