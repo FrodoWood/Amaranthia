@@ -4685,6 +4685,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5332615387969721032, guid: 2f9d75aff5e69e54f975a953849d1380,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5236,7 +5241,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 998230249}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
@@ -6461,6 +6466,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570474827820469697, guid: 2f9d75aff5e69e54f975a953849d1380,
+        type: 3}
+      propertyPath: destroyedTimer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570474827820469697, guid: 2f9d75aff5e69e54f975a953849d1380,
+        type: 3}
+      propertyPath: enemiesToSpawn.Array.data[1].amount
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5332615387969721032, guid: 2f9d75aff5e69e54f975a953849d1380,
         type: 3}
@@ -10643,6 +10658,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332615387969721032, guid: 2f9d75aff5e69e54f975a953849d1380,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
