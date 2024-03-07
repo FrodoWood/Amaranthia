@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] LayerMask clickableLayers;
 
     private PlayerState currentState;
+    private AbilityType currentCastingState;
+    private PlayerNotCastingState currentNotCastingState;
 
     [Header("Abilities")]
     private BaseAbility currentAbility;
@@ -43,11 +45,48 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Start()
     {
         fireballAbility = new FireballAbility();
-        currentState = PlayerState.NotCasting;
         currentAbility = fireballAbility;
         currentHealth = maxHealth;
         healthbar.UpdateHealthbar(maxHealth, currentHealth);
         hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
+
+        ChangeState(PlayerState.NotCasting);
+        ChangeNotCastingState(PlayerNotCastingState.Idle);
+    }
+    private void Update()
+    {
+        UpdateState(currentState);
+        //Debug.Log(currentState);
+        //switch (currentState)
+        //{
+        //    case PlayerState.NotCasting:
+        //        castingAbility = false;
+        //        ClickToMove();
+        //        checkAbilityTrigger();
+        //        agent.isStopped = false;
+        //        FaceNavMeshTarget();
+        //        break;
+
+        //    case PlayerState.Casting:
+        //        agent.isStopped = true;
+        //        if (castingAbility == false)
+        //        {
+        //            faceMouse();
+        //            currentAbility?.TriggerAbility(this);
+        //            StartCoroutine(waitXSecondsAndChangeState(0.3f, PlayerState.NotCasting));
+        //            castingAbility = true;
+        //        }
+        //        ClickToMove();
+        //        break;
+
+        //    case PlayerState.Dead:
+        //        agent.enabled = false;
+
+        //        break;
+        //}
+
+        //FaceTarget();
+        //SetAnimations();
     }
     private void AssignInputs()
     {
@@ -58,8 +97,135 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void ChangeState(PlayerState newState)
     {
+        OnExitState(currentState);
         currentState = newState;
+        OnEnterState(currentState);
     }
+    private void ChangeCastingState(AbilityType newCastingState)
+    {
+        currentCastingState = newCastingState;
+    }
+    private void ChangeNotCastingState(PlayerNotCastingState newNotCastingState)
+    {
+        currentNotCastingState = newNotCastingState;
+    }
+
+
+    private void OnEnterState(PlayerState currentState)
+    {
+        switch (currentState)
+        {
+            case PlayerState.NotCasting:
+                OnEnterNotCasting();
+                break;
+            case PlayerState.Casting:
+                OnEnterCasting();
+                break;
+            case PlayerState.Dead:
+                OnEnterDead();
+                break;
+        }
+    }
+    private void UpdateState(PlayerState currentState)
+    {
+        switch (currentState)
+        {
+            case PlayerState.NotCasting:
+                UpdateNotCasting();
+                break;
+            case PlayerState.Casting:
+                UpdateCasting();
+                break;
+            case PlayerState.Dead:
+                UpdateDead();
+                break;
+        }
+    }
+    private void OnExitState(PlayerState currentState)
+    {
+        switch (currentState)
+        {
+            case PlayerState.NotCasting:
+                OnExitNotCasting();
+                break;
+            case PlayerState.Casting:
+                OnExitCasting();
+                break;
+            case PlayerState.Dead:
+                OnExitDead();
+                break;
+        }
+    }
+
+
+    private void OnEnterNotCasting()
+    {
+        Debug.Log("Entered not casting");
+        switch (currentNotCastingState)
+        {
+            case PlayerNotCastingState.Idle:
+                Debug.Log("Entered Idle");
+                break;
+            case PlayerNotCastingState.Moving:
+                Debug.Log("Entered Moving");
+                break;
+        }
+    }
+    private void UpdateNotCasting()
+    {
+        ClickToMove();
+        switch (currentNotCastingState)
+        {
+            case PlayerNotCastingState.Idle:
+                if (agent.velocity != Vector3.zero)
+                {
+                    ChangeNotCastingState(PlayerNotCastingState.Moving);
+                    ChangeState(PlayerState.NotCasting);
+                }
+                break;
+            case PlayerNotCastingState.Moving:
+                if (agent.velocity == Vector3.zero)
+                {
+                    ChangeNotCastingState(PlayerNotCastingState.Idle);
+                    ChangeState(PlayerState.NotCasting);
+                }
+                break;
+        }
+    }
+    private void OnExitNotCasting()
+    {
+        
+    }
+
+
+    private void OnEnterCasting()
+    {
+        
+    }
+    private void UpdateCasting()
+    {
+        
+    }
+    private void OnExitCasting()
+    {
+        
+    }
+    
+
+    private void OnEnterDead()
+    {
+        
+    }
+    private void UpdateDead()
+    {
+        
+    }
+    private void OnExitDead()
+    {
+        
+    }
+
+
 
     private void changeAbility(BaseAbility newAbility)
     {
@@ -87,41 +253,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    private void Update()
-    {
-        //Debug.Log(currentState);
-        switch (currentState)
-        {
-            case PlayerState.NotCasting:
-                castingAbility = false;
-                ClickToMove();
-                checkAbilityTrigger();
-                agent.isStopped = false;
-                FaceNavMeshTarget();
-                break;
 
-            case PlayerState.Casting:
-                agent.isStopped = true;
-                if (castingAbility == false)
-                {
-                    faceMouse();
-                    currentAbility?.TriggerAbility(this);
-                    StartCoroutine(waitXSecondsAndChangeState(0.3f, PlayerState.NotCasting));
-                    castingAbility = true;
-                }
-                ClickToMove();
-                break;
-
-            case PlayerState.Dead:
-                agent.enabled = false;
-
-                break;
-        }
-        //FaceTarget();
-        //SetAnimations();
-    }
-
-    private IEnumerator waitXSecondsAndChangeState(float amount, PlayerState newState)
+    private IEnumerator ChangeStateAfterSeconds(float amount, PlayerState newState)
     {
         Debug.Log("Waiting for " +  amount + " seconds");
         yield return new WaitForSeconds(amount);
@@ -134,7 +267,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (input.Main.Q.triggered)
         {
             ChangeState(PlayerState.Casting);
-            changeAbility(fireballAbility);
+            ChangeCastingState(AbilityType.Q);
+            //changeAbility(fireballAbility);
         }
         else if (input.Main.W.triggered)
         {
@@ -149,6 +283,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             ChangeState(PlayerState.Casting);
         }
     }
+
 
     private void FaceNavMeshTarget()
     {

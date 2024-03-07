@@ -212,7 +212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &34777153
 Transform:
   m_ObjectHideFlags: 0
@@ -10088,6 +10088,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Troll
       objectReference: {fileID: 0}
+    - target: {fileID: 3358375874516158943, guid: 003f1665d58f8234b9d809588f9c7045,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3997299584322402454, guid: 003f1665d58f8234b9d809588f9c7045,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10279,6 +10284,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942381929336877415, guid: e0df83bdda171e4408c77b2d46158aa7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

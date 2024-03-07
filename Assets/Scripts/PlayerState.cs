@@ -8,3 +8,9 @@ public enum PlayerState
     Casting,
     Dead,
 }
+
+public enum PlayerNotCastingState
+{
+    Idle,
+    Moving,
+}
