@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private PlayerState currentState;
 
     [Header("Abilities")]
+    [SerializeField] private UIAbility uiAbility;
     private AbilityQ abilityQ;
     private AbilityW abilityW;
     private AbilityE abilityE;
@@ -49,6 +50,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         healthbar.UpdateHealthbar(maxHealth, currentHealth);
         hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
+
+        BaseAbility[] abilities = new BaseAbility[] { abilityQ, abilityW, abilityE, abilityR };
+        uiAbility.Initialise(abilities);
 
         ChangeState(PlayerState.Idle);
     }

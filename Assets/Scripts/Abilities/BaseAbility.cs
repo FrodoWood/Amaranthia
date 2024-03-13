@@ -7,9 +7,9 @@ public abstract class BaseAbility: MonoBehaviour, IAbility
     [SerializeField] protected bool onCooldown;
     private bool isComplete;
     [SerializeField] protected bool abilityEnabled = false;
-    [SerializeField] protected float cooldown;
+    [SerializeField] public float cooldown;
     [SerializeField] protected float duration;
-    private float cooldownTimer;
+    public float cooldownTimer { get; private set; }
     private float durationTimer;
     protected PlayerController player;
 
@@ -44,6 +44,7 @@ public abstract class BaseAbility: MonoBehaviour, IAbility
         cooldownTimer -= Time.deltaTime;
         if (cooldownTimer <= 0)
         {
+            cooldownTimer = 0;
             onCooldown = false;
         }
     }    
@@ -54,6 +55,7 @@ public abstract class BaseAbility: MonoBehaviour, IAbility
         durationTimer -= Time.deltaTime;
         if (durationTimer <= 0)
         {
+            durationTimer = 0;
             isComplete = true;
         }
     }
