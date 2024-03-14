@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     CustomActions input;
     NavMeshAgent agent;
     Animator animator;
+    PlayerStats playerStats;
 
     [Header("Movement")]
     [SerializeField] ParticleSystem clickEffect;
@@ -28,8 +29,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Health")]
     [SerializeField] private float currentHealth;
     [SerializeField] private float maxHealth;
-    [SerializeField] private float damage;
-
     [SerializeField] private Healthbar healthbar;
     [SerializeField] private Healthbar hudHealthbar;
 
@@ -38,6 +37,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         input = new CustomActions();
+        playerStats = GetComponent<PlayerStats>();
         abilityQ = GetComponent<AbilityQ>();
         abilityW = GetComponent<AbilityW>();
         abilityE = GetComponent<AbilityE>();
@@ -59,14 +59,14 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Update()
     {
         UpdateState(currentState);
+
+        UpdateStats();
     }
-    private void AssignInputs()
+
+    private void UpdateStats()
     {
-        //input.Main.Move.performed += ctx => ClickToMove();
-        //input.Main.Q.performed += ctx => useFireballAbility();
-
+        agent.speed = playerStats.movementSpeed;
     }
-
     private void ChangeState(PlayerState newState)
     {
         OnExitState(currentState);

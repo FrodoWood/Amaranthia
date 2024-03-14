@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeae2fab97ff31042a86eff087cd4a91, type: 3}
+  m_Script: {fileID: 11500000, guid: 2101549731a891241a7725d8cdbef5a7, type: 3}
   m_Name: 10 CDR
   m_EditorClassIdentifier: 
-  upgradeName: + 10 Cooldown Reduction
+  upgradeName: +10 CDR
   cooldownReduction: 10
+  abilityDamage: 0
+  movementSpeed: 0

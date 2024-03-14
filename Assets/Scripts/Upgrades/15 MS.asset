@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2101549731a891241a7725d8cdbef5a7, type: 3}
-  m_Name: 20 CDR
+  m_Name: 15 MS
   m_EditorClassIdentifier: 
-  upgradeName: +20 CDR
-  cooldownReduction: 20
+  upgradeName: +15 MS
+  cooldownReduction: 0
   abilityDamage: 0
-  movementSpeed: 0
+  movementSpeed: 15

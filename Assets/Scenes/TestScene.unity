@@ -6583,11 +6583,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 434708851}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1820, y: -980}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -40, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!1001 &1269217557
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10198,7 +10198,6 @@ MonoBehaviour:
   uiAbility: {fileID: 554513519}
   currentHealth: 0
   maxHealth: 100
-  damage: 10
   healthbar: {fileID: 332685608}
   hudHealthbar: {fileID: 1587574175}
 --- !u!95 &2005218605
@@ -10335,6 +10334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldownReduction: 0
   abilityDamage: 5
+  movementSpeed: 10
 --- !u!114 &2005218612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10348,8 +10348,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradesPool:
-  - {fileID: 11400000, guid: c9a76f7e89870244297f273031f634d6, type: 2}
+  - {fileID: 11400000, guid: 8c18e51f90ed078439b5923e53bd1c59, type: 2}
   - {fileID: 11400000, guid: 32853fe2b7070da43921af38681768a2, type: 2}
+  - {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
+  - {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
+  - {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
   activeUpgrades: []
 --- !u!4 &2023027659 stripped
 Transform:
