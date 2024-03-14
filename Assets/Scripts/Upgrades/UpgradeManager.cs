@@ -26,6 +26,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void ActivateUpgrade(Upgrade _upgrade)
     {
+        if (!upgradesPool.Contains(_upgrade)) return;
         upgradesPool.Remove(_upgrade);
         activeUpgrades.Add(_upgrade);
         _upgrade.Initialise(playerStats);
