@@ -8,10 +8,11 @@ public class LevelsManager : MonoBehaviour
     public int currentLevel;
     public float currentExp;
     public float maxExp = 100;
-
+    public LevelsBar levelsBar;
     private void Update()
     {
         if(currentExp >= maxExp) IncreaseLevel();
+        levelsBar.UpdateLevelsBar(maxExp, currentExp, currentLevel);
     }
 
     private void Start()
