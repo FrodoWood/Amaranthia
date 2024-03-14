@@ -14,10 +14,6 @@ public class UpgradeManager : MonoBehaviour
     }
     void Start()
     {
-        foreach (Upgrade upgrade in upgradesPool)
-        {
-            ActivateUpgrade(upgrade); ;
-        }
     }
 
     void Update()
