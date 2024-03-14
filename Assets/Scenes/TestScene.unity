@@ -10081,6 +10081,7 @@ GameObject:
   - component: {fileID: 2005218607}
   - component: {fileID: 2005218612}
   - component: {fileID: 2005218611}
+  - component: {fileID: 2005218613}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -10354,6 +10355,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
   - {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
   activeUpgrades: []
+--- !u!114 &2005218613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005218599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ca9f0897b883747b0051106d3e9dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseLevel: 1
+  currentLevel: 0
+  currentExp: 0
+  maxExp: 20
 --- !u!4 &2023027659 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9069115365609054727, guid: 60f79905accf3b24fa0114b941f1aac0,

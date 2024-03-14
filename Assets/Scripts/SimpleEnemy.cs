@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
+
 
 public class SimpleEnemy : Enemy
 {
@@ -10,6 +13,7 @@ public class SimpleEnemy : Enemy
     private Vector3 spawnPosition;
     private Color chaseColour = new Color(1f, 0f, 0f, 0.3f);
     private Color patrolColour = new Color(0f, 1f, 0f, 0.3f);
+    public static event Action onDeath;
 
     protected override void Start()
     {
@@ -139,6 +143,7 @@ public class SimpleEnemy : Enemy
     protected override void OnEnterDead()
     {
         Debug.Log($"{enemyName} Entered Dead");
+        onDeath?.Invoke();
         animator.SetTrigger("Dead");
         agent.enabled = false;
         collider.enabled = false;
