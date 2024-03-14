@@ -7,7 +7,8 @@ public class AbilityQ : BaseAbility
 {
     [SerializeField] private string abilityName;
     [SerializeField] private float fireballSpeed = 25f;
-    [SerializeField] private float fireballDamage = 10f;
+    [SerializeField] private float baseDamage = 10f;
+    [SerializeField] private float damage = 10f;
     [SerializeField] private GameObject fireballPrefab;
 
     public override void TriggerAbility()
@@ -17,10 +18,22 @@ public class AbilityQ : BaseAbility
         base.TriggerAbility(); // Starts the cooldown timer and sets the ability on cooldown
         GameObject newFireball = GameObject.Instantiate(fireballPrefab, player.transform.position + 1.04f * player.transform.forward, Quaternion.identity);
         Fireball fireball = newFireball.GetComponent<Fireball>();
-        fireball?.Setup(fireballDamage, player);
+        fireball?.Setup(damage, player);
         Rigidbody fireballRigidbody = fireball.GetComponent<Rigidbody>();
         fireballRigidbody?.AddForce(player.transform.forward * fireballSpeed, ForceMode.Impulse);
         GameObject.Destroy(newFireball, 2f);
 
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        UpdateStats();
+    }
+
+    public void UpdateStats()
+    {
+        damage = baseDamage + playerStats.abilityDamage;
+        cooldown = baseCooldown * (1 - (playerStats.cooldownReduction / 100));
     }
 }

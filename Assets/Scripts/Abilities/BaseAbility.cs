@@ -4,23 +4,30 @@ using UnityEngine;
 
 public abstract class BaseAbility: MonoBehaviour, IAbility
 {
-    [SerializeField] protected bool onCooldown;
     private bool isComplete;
     [SerializeField] protected bool abilityEnabled = false;
+
+    [SerializeField] protected bool onCooldown;
+    [SerializeField] public float baseCooldown;
     [SerializeField] public float cooldown;
-    [SerializeField] protected float duration;
     public float cooldownTimer { get; private set; }
+
+    [SerializeField] protected float duration;
     private float durationTimer;
+
     protected PlayerController player;
+    protected PlayerStats playerStats;
 
     protected virtual void Awake()
     {
         player = GetComponent<PlayerController>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     protected virtual void Start()
     {
         onCooldown = false;
+        cooldown = baseCooldown;
     }
 
     protected virtual void Update()
