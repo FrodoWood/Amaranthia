@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.AI;
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
@@ -18,10 +19,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     private PlayerState currentState;
 
     [Header("Abilities")]
-    private BaseAbility currentAbility;
-    public BaseAbility fireballAbility;
-    private bool castingAbility = false;
-    public GameObject fireballPrefab;
+    [SerializeField] private UIAbility uiAbility;
+    private AbilityQ abilityQ;
+    private AbilityW abilityW;
+    private AbilityE abilityE;
+    private AbilityR abilityR;
 
     [Header("Health")]
     [SerializeField] private float currentHealth;
@@ -36,18 +38,27 @@ public class PlayerController : MonoBehaviour, IDamageable
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         input = new CustomActions();
-        //AssignInputs();
+        abilityQ = GetComponent<AbilityQ>();
+        abilityW = GetComponent<AbilityW>();
+        abilityE = GetComponent<AbilityE>();
+        abilityR = GetComponent<AbilityR>();
 
     }
 
     private void Start()
     {
-        fireballAbility = new FireballAbility();
-        currentState = PlayerState.NotCasting;
-        currentAbility = fireballAbility;
         currentHealth = maxHealth;
         healthbar.UpdateHealthbar(maxHealth, currentHealth);
         hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
+
+        BaseAbility[] abilities = new BaseAbility[] { abilityQ, abilityW, abilityE, abilityR };
+        uiAbility.Initialise(abilities);
+
+        ChangeState(PlayerState.Idle);
+    }
+    private void Update()
+    {
+        UpdateState(currentState);
     }
     private void AssignInputs()
     {
@@ -58,18 +69,229 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void ChangeState(PlayerState newState)
     {
+        OnExitState(currentState);
         currentState = newState;
+        OnEnterState(currentState);
     }
 
-    private void changeAbility(BaseAbility newAbility)
+
+    private void OnEnterState(PlayerState currentState)
     {
-        currentAbility = newAbility;
+        switch (currentState)
+        {
+            case PlayerState.Idle:
+                OnEnterIdle();
+                break;
+            case PlayerState.Moving:
+                OnEnterMoving();
+                break;
+            case PlayerState.Dead:
+                OnEnterDead();
+                break;
+            case PlayerState.Q:
+                OnEnterQ();
+                break;
+            case PlayerState.W:
+                OnEnterW();
+                break;
+            case PlayerState.E:
+                OnEnterE();
+                break;
+            case PlayerState.R:
+                OnEnterR();
+                break;
+        }
     }
-    private void useFireballAbility()
+    private void OnExitState(PlayerState currentState)
+    {
+        switch (currentState)
+        {
+            case PlayerState.Idle:
+                OnExitIdle();
+                break;
+            case PlayerState.Moving:
+                OnExitMoving();
+                break;
+            case PlayerState.Dead:
+                OnExitDead();
+                break;
+            case PlayerState.Q:
+                OnExitQ();
+                break;
+            case PlayerState.W:
+                OnExitW();
+                break;
+            case PlayerState.E:
+                OnExitE();
+                break;
+            case PlayerState.R:
+                OnExitR();
+                break;
+        }
+    }
+    private void UpdateState(PlayerState currentState)
+    {
+        switch (currentState)
+        {
+            case PlayerState.Idle:
+                UpdateIdle();
+                break;
+            case PlayerState.Moving:
+                UpdateMoving();
+                break;
+            case PlayerState.Dead:
+                UpdateDead();
+                break;
+            case PlayerState.Q:
+                UpdateQ();
+                break;
+            case PlayerState.W:
+                UpdateW();
+                break;
+            case PlayerState.E:
+                UpdateE();
+                break;
+            case PlayerState.R:
+                UpdateR();
+                break;
+        }
+    }
+
+
+
+    private void OnEnterIdle()
     {
         
-        fireballAbility.TriggerAbility(this);
     }
+    private void UpdateIdle()
+    {
+        ClickToMove();
+        if (CheckAbilityTrigger()) HandleAbilityTrigger();
+        else if(agent.hasPath) ChangeState(PlayerState.Moving);
+    }
+    private void OnExitIdle()
+    {
+        
+    }
+
+
+
+    private void OnEnterMoving()
+    {
+        
+    }
+    private void UpdateMoving()
+    {
+        ClickToMove();
+        if (CheckAbilityTrigger()) HandleAbilityTrigger();
+        else if(!agent.hasPath) ChangeState(PlayerState.Idle);
+    }
+    private void OnExitMoving()
+    {
+        
+    }
+
+    private void OnEnterQ()
+    {
+        faceMouse();
+        abilityQ.TriggerAbility();
+        agent.isStopped = true;
+    }
+    private void UpdateQ()
+    {
+        ClickToMove();
+        if (abilityQ.Complete())
+        {
+            if (CheckAbilityTrigger()) HandleAbilityTrigger();
+            else if (!agent.hasPath) ChangeState(PlayerState.Idle);
+            else if (agent.hasPath) ChangeState(PlayerState.Moving);
+        }
+    }
+    private void OnExitQ()
+    {
+        agent.isStopped = false;
+    }
+
+
+    private void OnEnterW()
+    {
+        abilityW.TriggerAbility();
+        agent.isStopped = true;
+    }
+    private void UpdateW()
+    {
+        ClickToMove();
+        if (abilityW.Complete())
+        {
+            if (CheckAbilityTrigger()) HandleAbilityTrigger();
+            else if (!agent.hasPath) ChangeState(PlayerState.Idle);
+            else if (agent.hasPath) ChangeState(PlayerState.Moving);
+        }
+    }
+    private void OnExitW()
+    {
+        agent.isStopped = false;
+    }
+
+
+    private void OnEnterE()
+    {
+        abilityE.TriggerAbility();
+        agent.isStopped = true;
+    }
+    private void UpdateE()
+    {
+        ClickToMove();
+        if (abilityE.Complete())
+        {
+            if (CheckAbilityTrigger()) HandleAbilityTrigger();
+            else if (!agent.hasPath) ChangeState(PlayerState.Idle);
+            else if (agent.hasPath) ChangeState(PlayerState.Moving);
+        }
+    }
+    private void OnExitE()
+    {
+        agent.isStopped = false;
+    }
+
+
+    private void OnEnterR()
+    {
+        abilityR.TriggerAbility();
+        agent.isStopped = true;
+    }
+    private void UpdateR()
+    {
+        ClickToMove();
+        if (abilityR.Complete())
+        {
+            if (CheckAbilityTrigger()) HandleAbilityTrigger();
+            else if (!agent.hasPath) ChangeState(PlayerState.Idle);
+            else if (agent.hasPath) ChangeState(PlayerState.Moving);
+        }
+    }
+    private void OnExitR()
+    {
+        agent.isStopped = false;
+    }
+
+
+    private void OnEnterDead()
+    {
+        agent.enabled = false;
+        Collider coll= GetComponent<Collider>();
+        if(coll != null) coll.enabled = false;
+    }
+    private void UpdateDead()
+    {
+        
+    }
+    private void OnExitDead()
+    {
+        
+    }
+
+
     private void ClickToMove()
     {
         if (!input.Main.Move.triggered)
@@ -87,41 +309,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    private void Update()
-    {
-        //Debug.Log(currentState);
-        switch (currentState)
-        {
-            case PlayerState.NotCasting:
-                castingAbility = false;
-                ClickToMove();
-                checkAbilityTrigger();
-                agent.isStopped = false;
-                FaceNavMeshTarget();
-                break;
 
-            case PlayerState.Casting:
-                agent.isStopped = true;
-                if (castingAbility == false)
-                {
-                    faceMouse();
-                    currentAbility?.TriggerAbility(this);
-                    StartCoroutine(waitXSecondsAndChangeState(0.3f, PlayerState.NotCasting));
-                    castingAbility = true;
-                }
-                ClickToMove();
-                break;
-
-            case PlayerState.Dead:
-                agent.enabled = false;
-
-                break;
-        }
-        //FaceTarget();
-        //SetAnimations();
-    }
-
-    private IEnumerator waitXSecondsAndChangeState(float amount, PlayerState newState)
+    private IEnumerator ChangeStateAfterSeconds(float amount, PlayerState newState)
     {
         Debug.Log("Waiting for " +  amount + " seconds");
         yield return new WaitForSeconds(amount);
@@ -129,26 +318,31 @@ public class PlayerController : MonoBehaviour, IDamageable
         ChangeState(newState);
     }
 
-    private void checkAbilityTrigger()
+    private bool CheckAbilityTrigger()
     {
-        if (input.Main.Q.triggered)
+        return (input.Main.Q.triggered || input.Main.W.triggered || input.Main.E.triggered || input.Main.R.triggered) ? true: false;
+    }
+
+    private void HandleAbilityTrigger()
+    {
+        if (input.Main.Q.triggered && abilityQ.Ready() && abilityQ.isEnabled())
         {
-            ChangeState(PlayerState.Casting);
-            changeAbility(fireballAbility);
+            ChangeState(PlayerState.Q);
         }
-        else if (input.Main.W.triggered)
+        else if (input.Main.W.triggered && abilityW.Ready() && abilityW.isEnabled())
         {
-            ChangeState(PlayerState.Casting);
+            ChangeState(PlayerState.W);
         }
-        else if (input.Main.E.triggered)
+        else if (input.Main.E.triggered && abilityE.Ready() && abilityE.isEnabled())
         {
-            ChangeState(PlayerState.Casting);
+            ChangeState(PlayerState.E);
         }
-        else if (input.Main.R.triggered)
+        else if (input.Main.R.triggered && abilityR.Ready() && abilityR.isEnabled())
         {
-            ChangeState(PlayerState.Casting);
+            ChangeState(PlayerState.R);
         }
     }
+
 
     private void FaceNavMeshTarget()
     {
@@ -199,7 +393,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         Debug.Log($"Player has taken {amount} damage!");
 
-        if (currentHealth == 0)
+        if (currentHealth <= 0)
         {
             ChangeState(PlayerState.Dead);
         }

@@ -4,7 +4,19 @@ using UnityEngine;
 
 public enum PlayerState 
 {
-    NotCasting,
-    Casting,
+    Idle,
+    Moving,
+    Q,
+    W,
+    E,
+    R,
     Dead,
+}
+
+public enum AbilityType
+{
+    Q,
+    W,
+    E,
+    R,
 }
