@@ -10102,7 +10102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityEnabled: 1
   onCooldown: 0
-  baseCooldown: 0
+  baseCooldown: 10
   cooldown: 8
   duration: 2
   abilityName: R
@@ -10120,7 +10120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityEnabled: 1
   onCooldown: 0
-  baseCooldown: 0
+  baseCooldown: 4
   cooldown: 6
   duration: 0
   abilityName: E
@@ -10138,7 +10138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityEnabled: 1
   onCooldown: 0
-  baseCooldown: 0
+  baseCooldown: 2
   cooldown: 4
   duration: 0
   abilityName: W
@@ -10191,8 +10191,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b5397e43efd0544b4fefadfa2e7571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgrades: []
-  playerStats: {fileID: 0}
+  upgradesPool:
+  - {fileID: 11400000, guid: c9a76f7e89870244297f273031f634d6, type: 2}
+  - {fileID: 11400000, guid: c9a76f7e89870244297f273031f634d6, type: 2}
+  - {fileID: 11400000, guid: c9a76f7e89870244297f273031f634d6, type: 2}
+  - {fileID: 11400000, guid: c9a76f7e89870244297f273031f634d6, type: 2}
+  - {fileID: 11400000, guid: c9a76f7e89870244297f273031f634d6, type: 2}
+  - {fileID: 11400000, guid: c9a76f7e89870244297f273031f634d6, type: 2}
+  - {fileID: 11400000, guid: c9a76f7e89870244297f273031f634d6, type: 2}
+  activeUpgrades: []
 --- !u!4 &2023027659 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9069115365609054727, guid: 60f79905accf3b24fa0114b941f1aac0,
