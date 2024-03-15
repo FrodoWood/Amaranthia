@@ -10,4 +10,5 @@ public class EnemyData : ScriptableObject
     public float moveSpeed;
     public float damage;
     public float visionRange;
+    public GameObject gemPrefab;
 }

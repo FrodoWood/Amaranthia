@@ -17,3 +17,5 @@ MonoBehaviour:
   moveSpeed: 5
   damage: 5
   visionRange: 20
+  gemPrefab: {fileID: 8666244950991746138, guid: 0eebe952f4e327d4ab4bdec42993bf65,
+    type: 3}

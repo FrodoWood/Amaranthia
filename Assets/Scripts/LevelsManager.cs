@@ -45,4 +45,14 @@ public class LevelsManager : MonoBehaviour
     {
         AddExp(5);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ICollectable collectable = other.gameObject.GetComponent<ICollectable>();
+        if (collectable != null)
+        {
+            collectable.OnCollect(this);
+        }
+    }
+
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.AI;
 using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
@@ -31,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float maxHealth;
     [SerializeField] private Healthbar healthbar;
     [SerializeField] private Healthbar hudHealthbar;
+
 
     private void Awake()
     {

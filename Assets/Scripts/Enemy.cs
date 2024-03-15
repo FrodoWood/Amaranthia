@@ -22,7 +22,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected Transform player;
     protected NavMeshAgent agent;
     protected Animator animator;
-    protected Collider collider;
+    protected Collider myCollider;
 
 
     [SerializeField] protected float currentHealth;
@@ -39,7 +39,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        collider = GetComponent<Collider>();
+        myCollider = GetComponent<Collider>();
 
     }
     protected virtual void Start()

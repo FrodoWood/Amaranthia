@@ -14,12 +14,14 @@ public class SimpleEnemy : Enemy
     private Color chaseColour = new Color(1f, 0f, 0f, 0.3f);
     private Color patrolColour = new Color(0f, 1f, 0f, 0.3f);
     public static event Action onDeath;
+    private GameObject gemPrefab;
 
     protected override void Start()
     {
         base.Start();
         spawnPosition = transform.position + Random.insideUnitSphere * 2;
         canAttack = true;
+        gemPrefab = enemyData.gemPrefab;
     }
     protected override void Update()
     {
@@ -146,8 +148,10 @@ public class SimpleEnemy : Enemy
         onDeath?.Invoke();
         animator.SetTrigger("Dead");
         agent.enabled = false;
-        collider.enabled = false;
+        myCollider.enabled = false;
         StopAllCoroutines();
+
+        GameObject newGem = Instantiate(gemPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject,3f);
     }
     protected override void UpdateDead()
