@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelsManager : MonoBehaviour
+public class LevelsManager : MonoBehaviour, ISaveable
 {
     public int baseLevel = 1;
     public int currentLevel;
@@ -17,9 +17,20 @@ public class LevelsManager : MonoBehaviour
 
     private void Start()
     {
-        currentLevel = baseLevel;
+        //currentLevel = baseLevel;
         currentExp = 0;
     }
+
+    public void LoadData(GameData data)
+    {
+        this.currentLevel = data.currentLevel;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.currentLevel = this.currentLevel;
+    }
+
     public void IncreaseLevel()
     {
         currentLevel += 1;
@@ -54,5 +65,4 @@ public class LevelsManager : MonoBehaviour
             collectable.OnCollect(this);
         }
     }
-
 }
