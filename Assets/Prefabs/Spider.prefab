@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5366588367743778971}
   - component: {fileID: 4255466766742873071}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 165728047163052859}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5544245801321684685}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegFront2_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7843307278618794977}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegFront2_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3565662553524128901}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpiderBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7686189682284250356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegFront1_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6598431614588587165}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegBack1_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8673198930428766603}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegBack2_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8615611332449157596}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegFront1_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 2232672721021005223}
   - component: {fileID: 819423508652290093}
   - component: {fileID: 7261624508131132295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -488,7 +488,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2813601108365657180}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1688105073980182157}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegBack2_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4675001695282283939}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegBack1_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}

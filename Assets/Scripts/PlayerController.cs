@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.AI;
 using System;
 
-public class PlayerController : MonoBehaviour, IDamageable
+public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 {
     CustomActions input;
     NavMeshAgent agent;
@@ -397,5 +397,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             ChangeState(PlayerState.Dead);
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        transform.position = data.playerPosition;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = transform.position;
     }
 }
