@@ -401,7 +401,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     public void LoadData(GameData data)
     {
-        transform.position = data.playerPosition;
+        agent.Warp(data.playerPosition);
     }
 
     public void SaveData(ref GameData data)

@@ -16,6 +16,13 @@ public class UpgradeManager : MonoBehaviour
     }
     void Start()
     {
+        foreach(Upgrade upgrade in upgradesPool)
+        {
+            if (upgrade.isActivated)
+            {
+                upgrade.Initialise(playerStats);
+            }
+        }
     }
 
     void Update()
