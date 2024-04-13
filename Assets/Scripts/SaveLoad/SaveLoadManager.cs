@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -16,18 +17,41 @@ public class SaveLoadManager : MonoBehaviour
 
     public void Awake()
     {
-        if(instance != null)
+        if(instance != null && instance != this)
         {
+            Destroy(gameObject);
             Debug.LogError("Found more than one SaveLoadManager");
+            return;
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+
     }
 
-    private void Start()
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        //if(saveables.Count != 0) SaveGame();
+        Debug.Log("OnSceneLoaded: Scene has been loaded!");
         this.saveables = FindAllSaveables();
         LoadGame();
+    }
+    public void OnSceneUnloaded(Scene scene)
+    {
+        SaveGame();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     public void NewGame()
@@ -44,7 +68,7 @@ public class SaveLoadManager : MonoBehaviour
         if(this.gameData == null)
         {
             Debug.Log("No save data was found, starting new game.");
-            NewGame();
+            return;
         }
 
         // Give loaded data to all other scripts
@@ -57,6 +81,11 @@ public class SaveLoadManager : MonoBehaviour
     [ContextMenu("SaveGame")]
     public void SaveGame()
     {
+        if(this.gameData == null)
+        {
+            Debug.LogWarning("No data found.");
+            return;
+        }
         // give gameData to other scripts so they can update it
         foreach (ISaveable saveable in saveables)
         {
@@ -71,5 +100,10 @@ public class SaveLoadManager : MonoBehaviour
         IEnumerable<ISaveable> saveables = FindObjectsOfType<MonoBehaviour>()
             .OfType<ISaveable>();
         return new List<ISaveable>(saveables);
+    }
+
+    public bool GameDataExists()
+    {
+        return this.gameData != null;
     }
 }
