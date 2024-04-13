@@ -7001,6 +7001,67 @@ Transform:
   - {fileID: 791515784}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!1 &1263567659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1263567662}
+  - component: {fileID: 1263567661}
+  - component: {fileID: 1263567660}
+  m_Layer: 0
+  m_Name: Upgrades
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1263567660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263567659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b35690cc6461284bb2f8e439153844c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeSO: {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
+  isActivated: 0
+--- !u!114 &1263567661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263567659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b35690cc6461284bb2f8e439153844c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeSO: {fileID: 11400000, guid: 8c18e51f90ed078439b5923e53bd1c59, type: 2}
+  isActivated: 0
+--- !u!4 &1263567662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263567659}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.6625426, y: -24.737906, z: 16.83331}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1265311881
 GameObject:
   m_ObjectHideFlags: 0
@@ -10775,13 +10836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b5397e43efd0544b4fefadfa2e7571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradesPool:
-  - {fileID: 11400000, guid: 8c18e51f90ed078439b5923e53bd1c59, type: 2}
-  - {fileID: 11400000, guid: 32853fe2b7070da43921af38681768a2, type: 2}
-  - {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
-  - {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
-  - {fileID: 11400000, guid: 489546b471ba1dc4897ec9d5ab94b4e5, type: 2}
-  activeUpgrades: []
+  upgradesPool: []
 --- !u!114 &2005218613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12052,3 +12107,4 @@ SceneRoots:
   - {fileID: 34777153}
   - {fileID: 1907911124}
   - {fileID: 452407285}
+  - {fileID: 1263567662}

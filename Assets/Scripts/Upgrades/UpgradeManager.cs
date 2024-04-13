@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class UpgradeManager : MonoBehaviour
 {
-    public List<Upgrade> upgradesPool = new List<Upgrade>();
-    public List<Upgrade> activeUpgrades = new List<Upgrade>();
+    public List<Upgrade> upgradesPool;
+
     private PlayerStats playerStats;
 
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
+        upgradesPool = FindObjectsOfType<Upgrade>().ToList();
     }
     void Start()
     {
@@ -18,17 +20,13 @@ public class UpgradeManager : MonoBehaviour
 
     void Update()
     {
-        foreach(Upgrade upgrade in activeUpgrades)
-        {
-            upgrade.OnUpdate();
-        }
     }
 
-    public void ActivateUpgrade(Upgrade _upgrade)
+    public void ActivateUpgrade(Upgrade upgrade)
     {
-        if (!upgradesPool.Contains(_upgrade)) return;
-        upgradesPool.Remove(_upgrade);
-        activeUpgrades.Add(_upgrade);
-        _upgrade.Initialise(playerStats);
+        if (!upgradesPool.Contains(upgrade)) return;
+        if (upgrade.isActivated) return;
+        upgrade.Initialise(playerStats);
+        upgrade.isActivated = true;
     }
 }

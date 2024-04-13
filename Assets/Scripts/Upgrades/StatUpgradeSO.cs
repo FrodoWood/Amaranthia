@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Upgrades/Stat Upgrade")]
-public class StatUpgrade : Upgrade
+public class StatUpgradeSO : UpgradeSO
 {
     public float cooldownReduction;
     public float abilityDamage;

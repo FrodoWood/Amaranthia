@@ -19,7 +19,7 @@ public class UpgradeButtonManager : MonoBehaviour
             Button button = newButton.GetComponent<Button>();
 
             TextMeshProUGUI textButton = button.GetComponentInChildren<TextMeshProUGUI>();
-            textButton.text = upgrade.upgradeName;
+            textButton.text = upgrade.GetName();
 
             RectTransform buttonRect = button.GetComponent<RectTransform>();
             buttonRect.anchoredPosition = new Vector2(0f, yOffset);

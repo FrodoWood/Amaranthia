@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public abstract class Upgrade : ScriptableObject
+public class Upgrade : MonoBehaviour
 {
-    public string upgradeName = "Upgrade";
-    protected PlayerStats playerStats;
+    public UpgradeSO upgradeSO;
+    
+    public bool isActivated = false;
 
-    public virtual void OnStart()
+    public void Initialise(PlayerStats _playerStats)
     {
+        upgradeSO.Initialise(_playerStats);
     }
-    public virtual void Initialise(PlayerStats _playerStats)
-    {
-        playerStats = _playerStats;
-    }
-    public abstract void OnUpdate();
 
+    private void Update()
+    {
+        upgradeSO.OnUpdate();
+    }
+
+    public string GetName()
+    {
+        return upgradeSO.name;
+    }
 }
