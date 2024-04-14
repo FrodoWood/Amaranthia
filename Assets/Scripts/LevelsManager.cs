@@ -7,6 +7,7 @@ public class LevelsManager : MonoBehaviour, ISaveable
     public int baseLevel = 1;
     public int currentLevel;
     public float currentExp;
+    public float totalExp;
     public float maxExp = 100;
     public LevelsBar levelsBar;
     private void Update()
@@ -24,11 +25,15 @@ public class LevelsManager : MonoBehaviour, ISaveable
     public void LoadData(GameData data)
     {
         this.currentLevel = data.currentLevel;
+        this.currentExp = data.currentExp;
+        this.totalExp = data.totalExp;
     }
 
     public void SaveData(ref GameData data)
     {
         data.currentLevel = this.currentLevel;
+        data.currentExp = (int)this.currentExp;
+        data.totalExp = (int)this.totalExp;
     }
 
     public void IncreaseLevel()
@@ -40,6 +45,7 @@ public class LevelsManager : MonoBehaviour, ISaveable
     public void AddExp(float _exp)
     {
         currentExp += _exp;
+        totalExp += _exp;
     }
 
     private void OnEnable()

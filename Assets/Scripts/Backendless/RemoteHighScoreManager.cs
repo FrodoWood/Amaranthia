@@ -16,11 +16,13 @@ public class HighScoreResult
 
 public class RemoteHighScoreManager : MonoBehaviour
 {
-    public HighScoreResult highScoreData;
+    public HighScoreResult highScoreData = null;
     public static RemoteHighScoreManager Instance { get; private set; }
 
     private IEnumerator coroutineSend;
     private IEnumerator coroutineReceive;
+
+    public static event Action OnHighScoreChange;
 
     void Awake()
     {
@@ -29,6 +31,24 @@ public class RemoteHighScoreManager : MonoBehaviour
 
         // don't destroy this object when we load scene
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        StartCoroutine(UpdateHighScorePeriodically(5));
+    }
+
+    private IEnumerator UpdateHighScorePeriodically(float seconds)
+    {
+        GetHighScore();
+        yield return new WaitForSeconds(seconds);
+        while (true)
+        {
+            GetHighScore();
+            Debug.Log("Checked for highscore update.");
+            yield return new WaitForSeconds(seconds);
+        }
+
     }
 
     public void GetHighScore()
@@ -40,6 +60,7 @@ public class RemoteHighScoreManager : MonoBehaviour
 
     public void SetHighScore(int score)
     {
+        highScoreData.Score = score;
         coroutineSend = SetHighScoreCR(score);
         StartCoroutine(coroutineSend);
 
@@ -97,7 +118,13 @@ public class RemoteHighScoreManager : MonoBehaviour
         else if (webreq.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Success");
-            HighScoreResult highScoreData = JsonUtility.FromJson<HighScoreResult>(webreq.downloadHandler.text);
+            HighScoreResult newHighScoreData = JsonUtility.FromJson<HighScoreResult>(webreq.downloadHandler.text);
+            int oldHighScore = highScoreData == null ? 0 : highScoreData.Score;
+            highScoreData = newHighScoreData;
+            if(oldHighScore != highScoreData.Score)
+            {
+                OnHighScoreChange?.Invoke();
+            }
             Debug.Log($"High score value: {highScoreData.Score}");
         }
         else
@@ -157,6 +184,7 @@ public class RemoteHighScoreManager : MonoBehaviour
         else if (webreq.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Success");
+            Debug.Log("SET new highscore on remote DATABASE");
         }
         else
         {

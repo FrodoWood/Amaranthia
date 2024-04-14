@@ -6,6 +6,7 @@ public class Upgrade : MonoBehaviour, ISaveable
 {
     public UpgradeSO upgradeSO;
     [SerializeField] private string id;
+    public string upgradeCustomName;
     [ContextMenu("Generate GUID")]
     private void GenerateGuid()
     {
@@ -17,7 +18,13 @@ public class Upgrade : MonoBehaviour, ISaveable
     {
         upgradeSO.Initialise(_playerStats);
     }
-
+    private void Awake()
+    {
+        if(id == "")
+        {
+            GenerateGuid();
+        }
+    }
     private void Update()
     {
         upgradeSO.OnUpdate();

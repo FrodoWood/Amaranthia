@@ -39,7 +39,10 @@ public class SaveLoadManager : MonoBehaviour
     }
     public void OnSceneUnloaded(Scene scene)
     {
-        SaveGame();
+        if (scene == SceneManager.GetSceneByBuildIndex(0))
+        {
+            SaveGame();
+        }
     }
 
     private void OnEnable()
