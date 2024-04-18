@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -17,6 +18,7 @@ public class SimpleEnemy : Enemy
     private GameObject gemPrefab;
     public bool hasRagdoll = false;
     private Ragdoll ragdoll;
+    private float smoothDampInjuredVelocity;
 
     protected override void Start()
     {
@@ -29,8 +31,9 @@ public class SimpleEnemy : Enemy
     protected override void Update()
     {
         base.Update();
+        UpdateInjuredLayerWeight();
     }
-    
+
     //IDLE
     protected override void OnEnterIdle()
     {
@@ -176,7 +179,6 @@ public class SimpleEnemy : Enemy
     public override void TakeDamage(float amount, EntityType entityType)
     {
         base.TakeDamage(amount, entityType);
-
     }
 
     private IEnumerator ResetAttack()
@@ -221,4 +223,18 @@ public class SimpleEnemy : Enemy
         Gizmos.DrawSphere(transform.position, visionRange);
     }
 
+    private void UpdateInjuredLayerWeight()
+    {
+        if (animator.layerCount == 1) return;
+        int layerIndex = animator.GetLayerIndex("Injured");
+        float targetWeight = 1 - currentHealth/maxHealth;
+        float smoothTime = 0.2f;
+        float currentWeight = animator.GetLayerWeight(layerIndex);
+        float newWeight = Mathf.SmoothDamp(currentWeight, targetWeight, ref smoothDampInjuredVelocity,smoothTime);
+        animator.SetLayerWeight(layerIndex, newWeight);
+
+        // Logging
+        Debug.Log($"Current weight: {currentWeight}");
+        Debug.Log($"New weight: {newWeight}");
+    }
 }

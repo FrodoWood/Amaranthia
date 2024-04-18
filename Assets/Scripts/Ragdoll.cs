@@ -6,10 +6,20 @@ using UnityEngine;
 public class Ragdoll : MonoBehaviour, IRagdoll
 {
     Rigidbody[] rigidbodies;
+    Collider[] colliders;
     Animator animator;
     void Start()
     {
         rigidbodies = GetComponentsInChildren<Rigidbody>();
+        colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            PhysicMaterial material = new PhysicMaterial();
+            material.dynamicFriction = 5f;
+            material.staticFriction = 5f;
+            material.bounciness = 0f;
+            collider.material = material;
+        }
         animator = GetComponent<Animator>();
         DeactivateRagdoll();
     }
@@ -38,7 +48,7 @@ public class Ragdoll : MonoBehaviour, IRagdoll
             //forceDirection = Random.onUnitSphere;
             float forceMagnitude = Random.Range(35f, 50f);
             rigidbody.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
-            rigidbody.drag = 1.2f;
+            //rigidbody.drag = 1.2f;
         }
     }
 

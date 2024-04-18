@@ -1757,11 +1757,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8544616813117355215, guid: 487a29add2a96154784947c62401be59,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2293,7 +2288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 2005218603}
   smoothSpeed: 200
-  offset: {x: 0, y: 45, z: -15}
+  offset: {x: 0, y: 51.9, z: -22.2}
 --- !u!4 &331195652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9069115365609054727, guid: 60f79905accf3b24fa0114b941f1aac0,
@@ -2486,11 +2481,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8544616813117355215, guid: 487a29add2a96154784947c62401be59,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2603,7 +2593,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384362320}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7960f48316679444ca28317367ec8de0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -6163,11 +6153,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8544616813117355215, guid: 487a29add2a96154784947c62401be59,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7653,11 +7638,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8544616813117355215, guid: 487a29add2a96154784947c62401be59,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9897,11 +9877,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8544616813117355215, guid: 487a29add2a96154784947c62401be59,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10195,11 +10170,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8544616813117355215, guid: 487a29add2a96154784947c62401be59,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11485,11 +11455,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8544616813117355215, guid: 487a29add2a96154784947c62401be59,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11995,7 +11960,7 @@ MonoBehaviour:
   duration: 0
   abilityName: Q
   fireballSpeed: 25
-  baseDamage: 10
+  baseDamage: 5
   damage: 10
   fireballPrefab: {fileID: 4355661808055307274, guid: 2cae9a9be39d0994a85b70da6c001ec0,
     type: 3}
@@ -12012,7 +11977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownReduction: 0
-  abilityDamage: 5
+  abilityDamage: 1
   movementSpeed: 10
 --- !u!114 &2005218612
 MonoBehaviour:
