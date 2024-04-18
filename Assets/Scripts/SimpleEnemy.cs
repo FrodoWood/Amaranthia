@@ -15,9 +15,12 @@ public class SimpleEnemy : Enemy
     private Color patrolColour = new Color(0f, 1f, 0f, 0.3f);
     public static event Action onDeath;
     private GameObject gemPrefab;
+    public bool hasRagdoll = false;
+    private Ragdoll ragdoll;
 
     protected override void Start()
     {
+        ragdoll = GetComponent<Ragdoll>();
         base.Start();
         spawnPosition = transform.position + Random.insideUnitSphere * 2;
         canAttack = true;
@@ -144,6 +147,10 @@ public class SimpleEnemy : Enemy
     //DEAD
     protected override void OnEnterDead()
     {
+        if(hasRagdoll)
+        {
+            ragdoll?.ActivateRagdoll();
+        }
         Debug.Log($"{enemyName} Entered Dead");
         onDeath?.Invoke();
         animator.SetTrigger("Dead");
