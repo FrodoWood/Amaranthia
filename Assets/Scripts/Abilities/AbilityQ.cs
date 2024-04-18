@@ -19,6 +19,7 @@ public class AbilityQ : BaseAbility
         GameObject newFireball = GameObject.Instantiate(fireballPrefab, player.transform.position + 1.04f * player.transform.forward, Quaternion.identity);
         Fireball fireball = newFireball.GetComponent<Fireball>();
         fireball?.Setup(damage, player);
+        fireball.transform.forward = player.transform.forward;
         Rigidbody fireballRigidbody = fireball.GetComponent<Rigidbody>();
         fireballRigidbody?.AddForce(player.transform.forward * fireballSpeed, ForceMode.Impulse);
         GameObject.Destroy(newFireball, 2f);

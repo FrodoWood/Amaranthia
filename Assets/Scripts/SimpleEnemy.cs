@@ -156,19 +156,12 @@ public class SimpleEnemy : Enemy
         if(hasRagdoll)
         {
             ragdoll?.ActivateRagdoll();
-            StartCoroutine(ApplyExplosionForce());
         }
 
         GameObject newGem = Instantiate(gemPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject,3f);
+        if(hasRagdoll) Destroy(gameObject,10f);
+        else Destroy(gameObject,3f);
     }
-
-    private IEnumerator ApplyExplosionForce()
-    {
-        yield return new WaitForSeconds(0.1f);
-        ragdoll?.Explode();
-    }
-
     protected override void UpdateDead()
     {
         

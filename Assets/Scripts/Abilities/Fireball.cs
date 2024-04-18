@@ -30,11 +30,22 @@ public class Fireball : MonoBehaviour
         }
         
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-        if(damageable != null)
+        damageable?.TakeDamage(damage, EntityType.Allied);
+        
+
+        IRagdoll ragdoll = collision.gameObject.GetComponent<IRagdoll>();
+        if(ragdoll == null)
         {
-            damageable.TakeDamage(damage, EntityType.Allied);
+            ragdoll = collision.gameObject.GetComponentInParent<IRagdoll>();
         }
+        ragdoll?.Explode(transform.forward);
 
         Destroy(gameObject);
     }
+
+    //private IEnumerator ApplyExplosionForce()
+    //{
+    //    yield return new WaitForSeconds(0.1f);
+    //    ragdoll?.Explode();
+    //}
 }

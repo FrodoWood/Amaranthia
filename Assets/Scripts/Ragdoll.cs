@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Ragdoll : MonoBehaviour
+public class Ragdoll : MonoBehaviour, IRagdoll
 {
     Rigidbody[] rigidbodies;
     Animator animator;
@@ -31,13 +31,14 @@ public class Ragdoll : MonoBehaviour
         animator.enabled = false;
     }
 
-    public void Explode()
+    public void Explode(Vector3 forceDirection)
     {
         foreach (var rigidbody in rigidbodies)
         {
-            Vector3 forceDirection = Random.onUnitSphere;
-            float forceMagnitude = Random.Range(50f, 100f);
+            //forceDirection = Random.onUnitSphere;
+            float forceMagnitude = Random.Range(35f, 50f);
             rigidbody.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+            rigidbody.drag = 1.2f;
         }
     }
 
