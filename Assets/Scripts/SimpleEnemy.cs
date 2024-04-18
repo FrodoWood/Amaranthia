@@ -147,20 +147,28 @@ public class SimpleEnemy : Enemy
     //DEAD
     protected override void OnEnterDead()
     {
-        if(hasRagdoll)
-        {
-            ragdoll?.ActivateRagdoll();
-        }
         Debug.Log($"{enemyName} Entered Dead");
         onDeath?.Invoke();
         animator.SetTrigger("Dead");
         agent.enabled = false;
         myCollider.enabled = false;
         StopAllCoroutines();
+        if(hasRagdoll)
+        {
+            ragdoll?.ActivateRagdoll();
+            StartCoroutine(ApplyExplosionForce());
+        }
 
         GameObject newGem = Instantiate(gemPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject,3f);
     }
+
+    private IEnumerator ApplyExplosionForce()
+    {
+        yield return new WaitForSeconds(0.1f);
+        ragdoll?.Explode();
+    }
+
     protected override void UpdateDead()
     {
         

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ragdoll : MonoBehaviour
@@ -28,6 +29,16 @@ public class Ragdoll : MonoBehaviour
             rigidbody.isKinematic = false;
         }
         animator.enabled = false;
+    }
+
+    public void Explode()
+    {
+        foreach (var rigidbody in rigidbodies)
+        {
+            Vector3 forceDirection = Random.onUnitSphere;
+            float forceMagnitude = Random.Range(50f, 100f);
+            rigidbody.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+        }
     }
 
 }
