@@ -26,30 +26,35 @@ public class RemoteHighScoreManager : MonoBehaviour
 
     void Awake()
     {
-        // force singleton instance
-        if (Instance == null) { Instance = this; } else { Destroy(gameObject); }
-
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            Debug.LogWarning("Found more than one RemoteHighScoreManager");
+            return;
+        }
+        Instance = this;
         // don't destroy this object when we load scene
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        StartCoroutine(UpdateHighScorePeriodically(5));
-    }
-
-    private IEnumerator UpdateHighScorePeriodically(float seconds)
-    {
+        //StartCoroutine(UpdateHighScorePeriodically(5));
         GetHighScore();
-        yield return new WaitForSeconds(seconds);
-        while (true)
-        {
-            GetHighScore();
-            Debug.Log("Checked for highscore update.");
-            yield return new WaitForSeconds(seconds);
-        }
-
     }
+
+    //private IEnumerator UpdateHighScorePeriodically(float seconds)
+    //{
+    //    GetHighScore();
+    //    yield return new WaitForSeconds(seconds);
+    //    while (true)
+    //    {
+    //        GetHighScore();
+    //        Debug.Log("Checked for highscore update.");
+    //        yield return new WaitForSeconds(seconds);
+    //    }
+
+    //}
 
     public void GetHighScore()
     {
@@ -60,16 +65,22 @@ public class RemoteHighScoreManager : MonoBehaviour
 
     public void SetHighScore(int score)
     {
+        if(highScoreData == null)
+        {
+            Debug.Log("Highscore Data was null! RemoteHighScoreManager wasn't able to retrieve the data from the server.");
+            Debug.Log("Cannot Save High Score on remote server");
+            return;
+        }
         highScoreData.Score = score;
         coroutineSend = SetHighScoreCR(score);
         StartCoroutine(coroutineSend);
 
     }
 
-    public void SetRandomHighScore()
-    {
-        SetHighScore((int)Random.Range(10, 100));
-    }
+    //public void SetRandomHighScore()
+    //{
+    //    SetHighScore((int)Random.Range(10, 100));
+    //}
 
 
     public IEnumerator GetHighScoreCR()

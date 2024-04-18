@@ -15,8 +15,8 @@ public class Ragdoll : MonoBehaviour, IRagdoll
         foreach (Collider collider in colliders)
         {
             PhysicMaterial material = new PhysicMaterial();
-            material.dynamicFriction = 5f;
-            material.staticFriction = 5f;
+            material.dynamicFriction = 2f;
+            material.staticFriction = 2f;
             material.bounciness = 0f;
             collider.material = material;
         }

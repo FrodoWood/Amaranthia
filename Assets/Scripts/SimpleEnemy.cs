@@ -232,9 +232,5 @@ public class SimpleEnemy : Enemy
         float currentWeight = animator.GetLayerWeight(layerIndex);
         float newWeight = Mathf.SmoothDamp(currentWeight, targetWeight, ref smoothDampInjuredVelocity,smoothTime);
         animator.SetLayerWeight(layerIndex, newWeight);
-
-        // Logging
-        Debug.Log($"Current weight: {currentWeight}");
-        Debug.Log($"New weight: {newWeight}");
     }
 }

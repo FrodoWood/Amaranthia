@@ -12,8 +12,7 @@ public class SaveLoadManager : MonoBehaviour
     private GameData gameData;
     private List<ISaveable> saveables;
     public static SaveLoadManager instance { get; private set; }
-
-
+    public static event Action OnGameSave;
 
     public void Awake()
     {
@@ -89,6 +88,7 @@ public class SaveLoadManager : MonoBehaviour
             Debug.LogWarning("No data found.");
             return;
         }
+        Debug.Log("OnGameSave event evoked!");
         // give gameData to other scripts so they can update it
         foreach (ISaveable saveable in saveables)
         {
@@ -96,6 +96,8 @@ public class SaveLoadManager : MonoBehaviour
         }
         // save data to file
         dataHandler.Save(gameData);
+        // Invoke OnGameSave event so that remote highscore can be updated 
+        OnGameSave?.Invoke();
     }
 
     private List<ISaveable> FindAllSaveables()
