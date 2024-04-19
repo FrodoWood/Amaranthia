@@ -1024,7 +1024,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3358375874516158943}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4.54
+  m_Radius: 2.5
   m_Speed: 3.5
   m_Acceleration: 100
   avoidancePriority: 50
@@ -1059,6 +1059,7 @@ MonoBehaviour:
   canAttack: 0
   patrolRadius: 20
   perlinScale: 3
+  hasRagdoll: 0
 --- !u!136 &879908911609583673
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1078,10 +1079,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.3543038
-  m_Height: 8.407291
+  m_Radius: 2.87
+  m_Height: 6.43
   m_Direction: 1
-  m_Center: {x: -0.08, y: 3.7036438, z: 1.21}
+  m_Center: {x: -0.08, y: 3.05, z: 1.21}
 --- !u!1 &3386079095042351841
 GameObject:
   m_ObjectHideFlags: 0
@@ -2491,6 +2492,7 @@ GameObject:
   - component: {fileID: 6271094870608321522}
   - component: {fileID: 2019539299638906668}
   - component: {fileID: 7510925702966935647}
+  - component: {fileID: 6854855057111496351}
   m_Layer: 6
   m_Name: Club
   m_TagString: Untagged
@@ -2563,6 +2565,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &6854855057111496351
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8212828808713802182}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8276259015472151978
 GameObject:
   m_ObjectHideFlags: 0

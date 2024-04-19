@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public PlayerController player;
 
     private void Awake()
     {
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        player = FindObjectOfType<PlayerController>();
     }
     
 }

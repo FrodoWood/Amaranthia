@@ -8,7 +8,7 @@ using System;
 public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 {
     CustomActions input;
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     Animator animator;
     PlayerStats playerStats;
 
@@ -247,13 +247,14 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     private void OnEnterE()
     {
         animator.SetTrigger("EAbility");
-        abilityE.TriggerAbility();
         agent.isStopped = true;
+        agent.ResetPath();
+        abilityE.TriggerAbility();
     }
     private void UpdateE()
     {
         ClickToMove();
-        if (CurrentAnimationFinished())
+        if (abilityE.Complete())
         {
             if (CheckAbilityTrigger()) HandleAbilityTrigger();
             else if (!agent.hasPath) ChangeState(PlayerState.Idle);
@@ -409,10 +410,15 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
         Debug.Log($"Player has taken {amount} damage!");
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && currentState != PlayerState.Dead)
         {
             ChangeState(PlayerState.Dead);
         }
+    }
+
+    public bool IsDead()
+    {
+        return currentState == PlayerState.Dead;
     }
 
     public void LoadData(GameData data)

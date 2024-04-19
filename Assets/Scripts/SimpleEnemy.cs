@@ -44,7 +44,7 @@ public class SimpleEnemy : Enemy
     }
     protected override void UpdateIdle()
     {
-        if (PlayerInRange())
+        if (PlayerInRange() && !GameManager.instance.player.IsDead())
         {
             StopAllCoroutines();
             ChangeState(EnemyState.Chasing);
@@ -70,9 +70,9 @@ public class SimpleEnemy : Enemy
         if(!agent.pathPending && (agent.remainingDistance - agent.stoppingDistance) < 0.5f)
         {
             agent.SetDestination(GetRandomNavMeshWayPoint(transform.position, patrolRadius));
-            if (Random.value < 0f) ChangeState(EnemyState.Idle);
+            if (Random.value < 0.1f) ChangeState(EnemyState.Idle);
         }
-        if (PlayerInRange()) ChangeState(EnemyState.Chasing);
+        if (PlayerInRange() && !GameManager.instance.player.IsDead()) ChangeState(EnemyState.Chasing);
     }
     protected override void OnExitPatrolling()
     {
@@ -89,6 +89,11 @@ public class SimpleEnemy : Enemy
     }
     protected override void UpdateAttacking()
     {
+        if (GameManager.instance.player.IsDead())
+        {
+            ChangeState(EnemyState.Patrolling);
+            return;
+        }
         if (canAttack && DistanceToPlayer() <= attackRange)
         {
             animator.SetTrigger("Attacking");
