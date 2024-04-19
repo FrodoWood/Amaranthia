@@ -224,6 +224,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     {
         animator.SetTrigger("WAbility");
         agent.isStopped = true;
+        abilityW.InstantiateExplosionEffects();
     }
     private void UpdateW()
     {

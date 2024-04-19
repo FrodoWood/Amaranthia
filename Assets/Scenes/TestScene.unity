@@ -11331,6 +11331,10 @@ MonoBehaviour:
   cooldown: 4
   duration: 0
   abilityName: W
+  baseDamage: 10
+  damage: 10
+  range: 4
+  explosionPrefab: {fileID: 0}
 --- !u!114 &2005218610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12504,7 +12508,7 @@ MonoBehaviour:
   cooldown: 2
   duration: 1.02
   abilityName: Q
-  fireballSpeed: 25
+  fireballSpeed: 35
   baseDamage: 5
   damage: 10
   fireballPrefab: {fileID: 4355661808055307274, guid: 2cae9a9be39d0994a85b70da6c001ec0,
@@ -14388,6 +14392,11 @@ MonoBehaviour:
   cooldown: 0
   duration: 0
   abilityName: W
+  baseDamage: 10
+  damage: 10
+  range: 10
+  explosionPrefab: {fileID: 3684416185440546380, guid: 288244646de740c43822644af9afdbfd,
+    type: 3}
 --- !u!4 &5563354319508052742
 Transform:
   m_ObjectHideFlags: 0

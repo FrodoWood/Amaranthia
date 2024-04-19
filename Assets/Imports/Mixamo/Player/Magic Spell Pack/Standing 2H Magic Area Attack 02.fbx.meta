@@ -37,7 +37,7 @@ ModelImporter:
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 35
-      lastFrame: 98
+      lastFrame: 70
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -57,7 +57,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.29158112
+      - time: 0.553314
         functionName: TriggerWAbility
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 91a790a778e2c524b84035719f62ce18,
