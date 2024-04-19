@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 88bb285ee714f6542b2419c484dfe706
+guid: ccb9d6d40064f1c4b9e8b6fef754f6ec
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Standing 2H Magic Area Attack 02
+      name: DashRun
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 98
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
