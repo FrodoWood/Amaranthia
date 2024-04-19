@@ -70,7 +70,7 @@ public class SimpleEnemy : Enemy
         if(!agent.pathPending && (agent.remainingDistance - agent.stoppingDistance) < 0.5f)
         {
             agent.SetDestination(GetRandomNavMeshWayPoint(transform.position, patrolRadius));
-            if (Random.value < 0.1f) ChangeState(EnemyState.Idle);
+            if (Random.value < 0f) ChangeState(EnemyState.Idle);
         }
         if (PlayerInRange() && !GameManager.instance.player.IsDead()) ChangeState(EnemyState.Chasing);
     }

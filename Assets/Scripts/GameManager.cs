@@ -21,5 +21,15 @@ public class GameManager : MonoBehaviour
 
         player = FindObjectOfType<PlayerController>();
     }
-    
+
+    private void Update()
+    {
+        if(player == null)
+        {
+            player = FindObjectOfType<PlayerController>();
+        }
+    }
+
+
+
 }
