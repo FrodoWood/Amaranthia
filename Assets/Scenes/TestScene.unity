@@ -10456,7 +10456,7 @@ MonoBehaviour:
   initialHighScore: 0
   newHighScore: 0
   score: 0
-  levelsManager: {fileID: 2005218613}
+  levelsManager: {fileID: 6478650725528542784}
   realTimeRemoteHighScoreUpdate: 0
 --- !u!4 &1825910267
 Transform:

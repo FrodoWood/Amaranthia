@@ -23,6 +23,7 @@ public class RemoteHighScoreManager : MonoBehaviour
     private IEnumerator coroutineReceive;
 
     public static event Action OnHighScoreChange;
+    public static event Action OnHighScoreRetrieved;
 
     void Awake()
     {
@@ -132,6 +133,7 @@ public class RemoteHighScoreManager : MonoBehaviour
             HighScoreResult newHighScoreData = JsonUtility.FromJson<HighScoreResult>(webreq.downloadHandler.text);
             int oldHighScore = highScoreData == null ? 0 : highScoreData.Score;
             highScoreData = newHighScoreData;
+            OnHighScoreRetrieved?.Invoke();
             if(oldHighScore != highScoreData.Score)
             {
                 OnHighScoreChange?.Invoke();

@@ -197,7 +197,6 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     {
         faceMouse();
         animator.SetTrigger("QAbility");
-        //abilityQ.TriggerAbility();
         agent.isStopped = true;
     }
     private void UpdateQ()
@@ -216,12 +215,14 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     {
         agent.isStopped = false;
     }
-
+    public void TriggerQAbility()
+    {
+        abilityQ.TriggerAbility();
+    }
 
     private void OnEnterW()
     {
         animator.SetTrigger("WAbility");
-        abilityW.TriggerAbility();
         agent.isStopped = true;
     }
     private void UpdateW()
@@ -238,7 +239,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     {
         agent.isStopped = false;
     }
-
+    public void TriggerWAbility()
+    {
+        abilityW.TriggerAbility();
+    }
 
     private void OnEnterE()
     {
@@ -282,7 +286,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     {
         agent.isStopped = false;
     }
-
+    public void TriggerRAbility()
+    {
+        abilityR.TriggerAbility();
+    }
 
     private void OnEnterDead()
     {

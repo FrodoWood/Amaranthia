@@ -57,10 +57,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.41683775
-        functionName: TriggerAbility
+      - time: 0.31975514
+        functionName: TriggerQAbility
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: d10b1f80c96175842b1f1cfb47453e07,
+        objectReferenceParameter: {fileID: 11500000, guid: 91a790a778e2c524b84035719f62ce18,
           type: 3}
         floatParameter: 0
         intParameter: 0
