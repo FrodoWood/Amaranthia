@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     [Header("Abilities")]
     [SerializeField] private UIAbility uiAbility;
+    public Transform projectileSpawnPoint;
     private AbilityQ abilityQ;
     private AbilityW abilityW;
     private AbilityE abilityE;

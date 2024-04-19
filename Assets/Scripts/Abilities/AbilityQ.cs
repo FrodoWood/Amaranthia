@@ -16,7 +16,7 @@ public class AbilityQ : BaseAbility
 
         Debug.Log(abilityName + " ability used!");
         base.TriggerAbility(); // Starts the cooldown timer and sets the ability on cooldown
-        GameObject newFireball = GameObject.Instantiate(fireballPrefab, player.transform.position + 1.04f * player.transform.forward, Quaternion.identity);
+        GameObject newFireball = GameObject.Instantiate(fireballPrefab, player.projectileSpawnPoint.transform.position, Quaternion.identity);
         Fireball fireball = newFireball.GetComponent<Fireball>();
         fireball?.Setup(damage, player);
         fireball.transform.forward = player.transform.forward;
