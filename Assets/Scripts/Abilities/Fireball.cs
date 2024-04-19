@@ -6,6 +6,7 @@ public class Fireball : MonoBehaviour
 {
     private float damage;
     private PlayerController player;
+    public GameObject collisionParticlesPrefab;
     void Start()
     {
         
@@ -24,6 +25,8 @@ public class Fireball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        GameObject collisionParticles = Instantiate(collisionParticlesPrefab, transform.position, Quaternion.identity);
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             Destroy(gameObject);
