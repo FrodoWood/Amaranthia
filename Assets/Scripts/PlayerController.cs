@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     [SerializeField] LayerMask clickableLayers;
 
     private PlayerState currentState;
+    private AnimatorStateInfo animatorStateInfo;
 
     [Header("Abilities")]
     [SerializeField] private UIAbility uiAbility;
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void OnEnterIdle()
     {
-        
+        animator.SetTrigger("Idle");
     }
     private void UpdateIdle()
     {
@@ -179,7 +180,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void OnEnterMoving()
     {
-        
+        animator.SetTrigger("Running");
     }
     private void UpdateMoving()
     {
@@ -195,13 +196,16 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     private void OnEnterQ()
     {
         faceMouse();
-        abilityQ.TriggerAbility();
+        animator.SetTrigger("QAbility");
+        //abilityQ.TriggerAbility();
         agent.isStopped = true;
     }
     private void UpdateQ()
     {
         ClickToMove();
-        if (abilityQ.Complete())
+
+        //Check if the current animation has finished playing
+        if (CurrentAnimationFinished())
         {
             if (CheckAbilityTrigger()) HandleAbilityTrigger();
             else if (!agent.hasPath) ChangeState(PlayerState.Idle);
@@ -216,13 +220,14 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void OnEnterW()
     {
+        animator.SetTrigger("WAbility");
         abilityW.TriggerAbility();
         agent.isStopped = true;
     }
     private void UpdateW()
     {
         ClickToMove();
-        if (abilityW.Complete())
+        if (CurrentAnimationFinished())
         {
             if (CheckAbilityTrigger()) HandleAbilityTrigger();
             else if (!agent.hasPath) ChangeState(PlayerState.Idle);
@@ -237,13 +242,14 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void OnEnterE()
     {
+        animator.SetTrigger("EAbility");
         abilityE.TriggerAbility();
         agent.isStopped = true;
     }
     private void UpdateE()
     {
         ClickToMove();
-        if (abilityE.Complete())
+        if (CurrentAnimationFinished())
         {
             if (CheckAbilityTrigger()) HandleAbilityTrigger();
             else if (!agent.hasPath) ChangeState(PlayerState.Idle);
@@ -258,13 +264,14 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void OnEnterR()
     {
+        animator.SetTrigger("RAbility");
         abilityR.TriggerAbility();
         agent.isStopped = true;
     }
     private void UpdateR()
     {
         ClickToMove();
-        if (abilityR.Complete())
+        if (CurrentAnimationFinished())
         {
             if (CheckAbilityTrigger()) HandleAbilityTrigger();
             else if (!agent.hasPath) ChangeState(PlayerState.Idle);
@@ -279,6 +286,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void OnEnterDead()
     {
+        animator.SetTrigger("Dead");
         agent.enabled = false;
         Collider coll= GetComponent<Collider>();
         if(coll != null) coll.enabled = false;
@@ -408,5 +416,12 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     public void SaveData(ref GameData data)
     {
         data.playerPosition = transform.position;
+    }
+
+    private bool CurrentAnimationFinished()
+    {
+        animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (animatorStateInfo.normalizedTime >= 1 && !animator.IsInTransition(0)) return true;
+        else return false;
     }
 }
