@@ -41,7 +41,7 @@ public class Fireball : MonoBehaviour
         {
             ragdoll = collision.gameObject.GetComponentInParent<IRagdoll>();
         }
-        ragdoll?.Explode(transform.forward);
+        ragdoll?.Explode(transform.forward, ForceMode.Impulse);
 
         Destroy(gameObject);
     }

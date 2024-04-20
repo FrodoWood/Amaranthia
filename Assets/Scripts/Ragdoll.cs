@@ -41,13 +41,13 @@ public class Ragdoll : MonoBehaviour, IRagdoll
         animator.enabled = false;
     }
 
-    public void Explode(Vector3 forceDirection)
+    public void Explode(Vector3 forceDirection, ForceMode forceMode)
     {
         foreach (var rigidbody in rigidbodies)
         {
             //forceDirection = Random.onUnitSphere;
             float forceMagnitude = Random.Range(35f, 50f);
-            rigidbody.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+            rigidbody.AddForce(forceDirection * forceMagnitude, forceMode);
             //rigidbody.drag = 1.2f;
         }
     }

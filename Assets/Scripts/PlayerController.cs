@@ -247,6 +247,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void OnEnterE()
     {
+        faceMouse();
         animator.SetTrigger("EAbility");
         agent.isStopped = true;
         agent.ResetPath();
@@ -270,8 +271,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void OnEnterR()
     {
+        faceMouse();
         animator.SetTrigger("RAbility");
-        abilityR.TriggerAbility();
         agent.isStopped = true;
     }
     private void UpdateR()
@@ -432,7 +433,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
         data.playerPosition = transform.position;
     }
 
-    private bool CurrentAnimationFinished()
+    public bool CurrentAnimationFinished()
     {
         animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (animatorStateInfo.normalizedTime >= 1 && !animator.IsInTransition(0)) return true;

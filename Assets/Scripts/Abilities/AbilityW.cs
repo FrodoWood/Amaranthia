@@ -25,7 +25,16 @@ public class AbilityW : BaseAbility
             //Apply force to each ragdoll
             IRagdoll ragdoll = collider.gameObject.GetComponent<IRagdoll>();
             Vector3 directionToCollider = collider.transform.position - transform.position;
-            ragdoll?.Explode(directionToCollider.normalized);
+            if(ragdoll != null)
+            {
+                ragdoll.Explode(directionToCollider.normalized, ForceMode.Impulse);
+            }
+            else
+            {
+                ragdoll = collider.gameObject.GetComponentInParent<IRagdoll>();
+                ragdoll?.Explode(directionToCollider.normalized, ForceMode.Impulse);
+                break;
+            }
         }
 
     }

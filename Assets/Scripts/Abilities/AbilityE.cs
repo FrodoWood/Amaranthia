@@ -16,9 +16,16 @@ public class AbilityE : BaseAbility
     protected override void Update()
     {
         base.Update();
+        UpdateStats();
+
         if (!Complete())
         {
             player.agent.Move(player.transform.forward * dashSpeed * Time.deltaTime);
         }
+    }
+
+    public void UpdateStats()
+    {
+        cooldown = baseCooldown * (1 - (playerStats.cooldownReduction / 100));
     }
 }

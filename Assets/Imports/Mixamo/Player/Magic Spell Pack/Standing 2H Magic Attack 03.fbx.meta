@@ -36,8 +36,8 @@ ModelImporter:
       name: Standing 2H Magic Attack 03
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 129
+      firstFrame: 20
+      lastFrame: 108
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -56,7 +56,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.11160691
+        functionName: TriggerRAbility
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 91a790a778e2c524b84035719f62ce18,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

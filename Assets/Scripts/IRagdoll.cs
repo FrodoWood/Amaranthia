@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IRagdoll
 {
-    void Explode(Vector3 forceDirection);
+    void Explode(Vector3 forceDirection, ForceMode forceMode);
 }
