@@ -10,6 +10,8 @@ public class Fireball : MonoBehaviour
     public GameObject collisionParticlesPrefab;
     public AudioClip fireballInitialSound;
     public AudioClip fireballExplodeSound;
+    [Range(0, 1f)]
+    public float explosionVolume;
     public AudioMixerGroup fireballMixerGroup;
 
     void Start()
@@ -43,7 +45,8 @@ public class Fireball : MonoBehaviour
         source.clip = fireballExplodeSound;
         source.spatialBlend = 0f;
         source.playOnAwake = false;
-        source.outputAudioMixerGroup = fireballMixerGroup;
+        //source.outputAudioMixerGroup = fireballMixerGroup;
+        source.volume = explosionVolume;
         source.Play();
         Destroy(audio, fireballExplodeSound.length);
 

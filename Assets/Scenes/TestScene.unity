@@ -11480,6 +11480,8 @@ MonoBehaviour:
   duration: 0
   abilityName: E
   dashSpeed: 0
+  dashAudio: {fileID: 0}
+  dashAudioVolume: 0
 --- !u!114 &2005218609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14677,6 +14679,8 @@ MonoBehaviour:
   duration: 0.2
   abilityName: E
   dashSpeed: 80
+  dashAudio: {fileID: 8300000, guid: e3ab34ce27061a44b9bb2130577810d0, type: 3}
+  dashAudioVolume: 0.658
 --- !u!4 &5763039787480851773
 Transform:
   m_ObjectHideFlags: 0
