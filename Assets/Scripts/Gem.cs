@@ -10,6 +10,8 @@ public class Gem : MonoBehaviour, ICollectable
     [SerializeField] private float verticalMotionSpeed = 1;
     [SerializeField] private float verticalMotionOffset = 2;
     public AudioClip gemPickup;
+    [Range(0,1f)]
+    public float gemPickupVolume;
 
     private void Start()
     {
@@ -18,14 +20,17 @@ public class Gem : MonoBehaviour, ICollectable
     public void OnCollect(LevelsManager levelsManager)
     {
         levelsManager.AddExp(value);
+
+        // Audio
         GameObject audio = new GameObject("GemPickUpSound");
         AudioSource source = audio.AddComponent<AudioSource>();
         source.clip = gemPickup;
         source.spatialBlend = 0f;
         source.playOnAwake = false;
-
+        source.volume = gemPickupVolume;
         source.Play();
         Destroy(audio,gemPickup.length);
+
         Destroy(gameObject);
     }
 

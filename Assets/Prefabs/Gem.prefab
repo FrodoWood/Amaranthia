@@ -101,7 +101,8 @@ MonoBehaviour:
   rotationSpeed: 100
   verticalMotionSpeed: 3
   verticalMotionOffset: 0.005
-  gemPickup: {fileID: 8300000, guid: 875d4fb36d954a84d842b5b914235382, type: 3}
+  gemPickup: {fileID: 8300000, guid: ca583055f38e2a84f97897f66c44f905, type: 3}
+  gemPickupVolume: 0.065
 --- !u!135 &1682330143574144685
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -9,6 +9,10 @@ public class AbilityR : BaseAbility
     [SerializeField] private float baseDamage = 10f;
     [SerializeField] private float damage = 10f;
     GameObject newBeam;
+    public AudioClip beamAudio;
+    [Range(0, 1f)]
+    public float beamAudioVolume;
+
 
 
     public override void TriggerAbility()
@@ -20,6 +24,16 @@ public class AbilityR : BaseAbility
         newBeam = Instantiate(beamPrefab, player.projectileSpawnPoint.transform.position, rotation);
         Beam beam = newBeam.GetComponent<Beam>();
         beam?.Setup(damage, player);
+
+        // Audio
+        GameObject audio = new GameObject("beamAudio");
+        AudioSource source = audio.AddComponent<AudioSource>();
+        source.clip = beamAudio;
+        source.spatialBlend = 0f;
+        source.playOnAwake = false;
+        source.volume = beamAudioVolume;
+        source.Play();
+        Destroy(audio, beamAudio.length);
 
     }
 

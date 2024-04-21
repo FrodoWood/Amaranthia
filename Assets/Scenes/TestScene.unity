@@ -11389,6 +11389,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   uiAbility: {fileID: 554513519}
   projectileSpawnPoint: {fileID: 0}
+  shockwaveAudioVolume: 0
+  shockwaveAudio: {fileID: 0}
   currentHealth: 0
   maxHealth: 100
   healthbar: {fileID: 1775384425524035683}
@@ -11457,6 +11459,8 @@ MonoBehaviour:
   beamPrefab: {fileID: 0}
   baseDamage: 10
   damage: 10
+  beamAudio: {fileID: 0}
+  beamAudioVolume: 0
 --- !u!114 &2005218608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13621,6 +13625,8 @@ MonoBehaviour:
     type: 3}
   baseDamage: 10
   damage: 10
+  beamAudio: {fileID: 8300000, guid: fe1a3627df042014a9b249f54918dfd9, type: 3}
+  beamAudioVolume: 0.759
 --- !u!1 &3157062931522366763
 GameObject:
   m_ObjectHideFlags: 0
@@ -13970,6 +13976,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   uiAbility: {fileID: 554513519}
   projectileSpawnPoint: {fileID: 1127922226}
+  shockwaveAudioVolume: 0.648
+  shockwaveAudio: {fileID: 8300000, guid: 90c7bf8de945a4f4ea9de0d8d506e3d5, type: 3}
   currentHealth: 0
   maxHealth: 100
   healthbar: {fileID: 1775384425524035683}

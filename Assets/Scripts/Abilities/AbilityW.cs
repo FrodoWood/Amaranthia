@@ -10,6 +10,8 @@ public class AbilityW : BaseAbility
     [SerializeField] private float range = 4f;
     [SerializeField] private GameObject explosionPrefab;
 
+
+
     public override void TriggerAbility()
     {
         Debug.Log(abilityName + " ability used!");
@@ -32,8 +34,7 @@ public class AbilityW : BaseAbility
             else
             {
                 ragdoll = collider.gameObject.GetComponentInParent<IRagdoll>();
-                ragdoll?.Explode(directionToCollider.normalized, ForceMode.Impulse);
-                break;
+                ragdoll?.Explode(directionToCollider.normalized * 3, ForceMode.Force);
             }
         }
 

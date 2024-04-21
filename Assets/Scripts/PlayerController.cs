@@ -27,6 +27,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     private AbilityE abilityE;
     private AbilityR abilityR;
 
+    [Range(0, 1f)]
+    public float shockwaveAudioVolume;
+    public AudioClip shockwaveAudio;
+
     [Header("Health")]
     [SerializeField] private float currentHealth;
     [SerializeField] private float maxHealth;
@@ -225,6 +229,15 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
         animator.SetTrigger("WAbility");
         agent.isStopped = true;
         abilityW.InstantiateExplosionEffects();
+        // Audio
+        GameObject audio = new GameObject("shockwaveAudio");
+        AudioSource source = audio.AddComponent<AudioSource>();
+        source.clip = shockwaveAudio;
+        source.spatialBlend = 0f;
+        source.playOnAwake = false;
+        source.volume = shockwaveAudioVolume;
+        source.Play();
+        Destroy(audio, shockwaveAudio.length);
     }
     private void UpdateW()
     {
