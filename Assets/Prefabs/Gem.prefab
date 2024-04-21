@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3445545799213997485}
   - component: {fileID: 8546210604674680750}
   - component: {fileID: 4932636041789412174}
-  - component: {fileID: 2482282242452178843}
   - component: {fileID: 6412062153916448572}
+  - component: {fileID: 1682330143574144685}
   m_Layer: 0
   m_Name: Gem
   m_TagString: Untagged
@@ -85,8 +85,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2482282242452178843
-BoxCollider:
+--- !u!114 &6412062153916448572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8666244950991746138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c98b95390ad8245ac195a5cb621faa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 1
+  rotationSpeed: 100
+  verticalMotionSpeed: 3
+  verticalMotionOffset: 0.005
+  gemPickup: {fileID: 8300000, guid: 875d4fb36d954a84d842b5b914235382, type: 3}
+--- !u!135 &1682330143574144685
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -104,21 +121,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 1.62
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6412062153916448572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8666244950991746138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90c98b95390ad8245ac195a5cb621faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value: 1
-  rotationSpeed: 100
-  verticalMotionSpeed: 3
-  verticalMotionOffset: 0.005
