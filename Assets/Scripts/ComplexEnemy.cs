@@ -100,7 +100,7 @@ public class ComplexEnemy : Enemy
         if (PlayerInRange())
         {
             lastKnownPlayerPosition = player.position;
-            agent.SetDestination(lastKnownPlayerPosition);
+            agent.SetDestination(GetRandomNavMeshWayPoint(transform.position,30f));
             Debug.Log("Last known player position:" + lastKnownPlayerPosition);
 
             if (DistanceToPlayer() <= attackRange && AnyAbilityAvailable())
@@ -168,12 +168,13 @@ public class ComplexEnemy : Enemy
     protected override void OnEnterAbility1()
     {
         animator.SetTrigger("Ability1");
-        ability1.TriggerAbility();
-        agent.isStopped = true;
+        ability1.Setup(player);
+        TriggerAbility1();
+        //agent.isStopped = true;
     }
     protected override void UpdateAbility1()
     {
-        if (CurrentAnimationFinished())
+        if (ability1.Complete())
         {
             ChangeState(EnemyState.Patrolling);
         }
@@ -181,12 +182,16 @@ public class ComplexEnemy : Enemy
     protected override void OnExitAbility1()
     {
     }
+    public void TriggerAbility1()
+    {
+        ability1.TriggerAbility();
+    }
 
     //ABILITY2
     protected override void OnEnterAbility2()
     {
         animator.SetTrigger("Ability1");
-        ability1.TriggerAbility();
+        //ability2.TriggerAbility();
         agent.isStopped = true;
     }
     protected override void UpdateAbility2()
@@ -198,6 +203,10 @@ public class ComplexEnemy : Enemy
     }
     protected override void OnExitAbility2()
     {
+    }
+    public void TriggerAbility2()
+    {
+        ability2.TriggerAbility();
     }
 
     //DEAD

@@ -16,6 +16,7 @@ public abstract class EnemyBaseAbility : MonoBehaviour, IAbility
 
     protected Enemy enemy;
     protected EnemyState linkedEnemyState;
+    protected Transform player;
 
     protected virtual void Awake()
     {
@@ -34,6 +35,10 @@ public abstract class EnemyBaseAbility : MonoBehaviour, IAbility
         UpdateDuration();
     }
 
+    public void Setup(Transform player)
+    {
+        this.player = player;
+    }
     public virtual void TriggerAbility()
     {
         onCooldown = true;

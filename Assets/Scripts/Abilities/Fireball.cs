@@ -38,6 +38,14 @@ public class Fireball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+        if(damageable != null)
+        {
+            damageable.TakeDamage(damage, fireballEntityType);
+            Debug.Log("Damageable found!!!");
+        }
+        //damageable?.TakeDamage(damage, fireballEntityType);
+
         //Audio
         GameObject audio = new GameObject("fireballExplodeSound");
         AudioSource source = audio.AddComponent<AudioSource>();
@@ -55,10 +63,7 @@ public class Fireball : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-        damageable?.TakeDamage(damage, fireballEntityType);
-        
+
 
         IRagdoll ragdoll = collision.gameObject.GetComponent<IRagdoll>();
         if(ragdoll == null)

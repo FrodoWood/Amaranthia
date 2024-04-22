@@ -9621,6 +9621,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MutantEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4642403330215562321, guid: 487a29add2a96154784947c62401be59,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5415281236612912875, guid: 487a29add2a96154784947c62401be59,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12053,20 +12058,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Witch
       objectReference: {fileID: 0}
-    - target: {fileID: 3214165333221967240, guid: 7e7b46fc3e379af4ab0ad408613772fc,
+    - target: {fileID: 3420816973156246072, guid: 7e7b46fc3e379af4ab0ad408613772fc,
         type: 3}
-      propertyPath: abilityName
-      value: qwer
-      objectReference: {fileID: 0}
-    - target: {fileID: 8442194271233789113, guid: 7e7b46fc3e379af4ab0ad408613772fc,
-        type: 3}
-      propertyPath: m_Enabled
+      propertyPath: duration
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8947641366672592706, guid: 7e7b46fc3e379af4ab0ad408613772fc,
+    - target: {fileID: 3420816973156246072, guid: 7e7b46fc3e379af4ab0ad408613772fc,
         type: 3}
-      propertyPath: avoidancePriority
-      value: 12
+      propertyPath: baseCooldown
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13414,11 +13414,11 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.23
   m_Height: 1.89
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}

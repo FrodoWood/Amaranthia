@@ -7,7 +7,7 @@ public class WitchAbility2 : EnemyBaseAbility
     [SerializeField] private string abilityName;
     [SerializeField] private float fireballSpeed = 25f;
     [SerializeField] private float baseDamage = 10f;
-    [SerializeField] private float damage = 10f;
+    [SerializeField] private float damage;
     [SerializeField] private GameObject witchFireballPrefab;
 
     private Vector3 fireballTargetPosition;
@@ -18,6 +18,12 @@ public class WitchAbility2 : EnemyBaseAbility
         linkedEnemyState = EnemyState.Ability2;
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        damage = baseDamage;
+    }
+
     public override void TriggerAbility()
     {
 
@@ -25,7 +31,7 @@ public class WitchAbility2 : EnemyBaseAbility
         base.TriggerAbility(); // Starts the cooldown timer and sets the ability on cooldown
 
         fireballTargetPosition = transform.position + Random.insideUnitSphere * 10;
-        GameObject newFireball = GameObject.Instantiate(witchFireballPrefab, fireballTargetPosition + Vector3.up * 5, Quaternion.identity);
+        GameObject newFireball = GameObject.Instantiate(witchFireballPrefab, fireballTargetPosition + Vector3.up * 30, Quaternion.identity);
 
         Fireball fireball = newFireball.GetComponent<Fireball>();
         fireball?.Setup(damage);

@@ -415,7 +415,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     public void TakeDamage(float amount, EntityType entityType)
     {
-        if (entityType == EntityType.Allied) return;
+        if (entityType == EntityType.Allied)
+        {
+            Debug.Log("Damange type was allied! Not counting it");
+            return;
+        }
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
 

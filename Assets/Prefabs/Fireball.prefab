@@ -124,7 +124,7 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -155,6 +155,7 @@ MonoBehaviour:
     type: 3}
   explosionVolume: 0.613
   fireballMixerGroup: {fileID: 24300002, guid: 372a553b838d2904ca9122e34d8b6daa, type: 2}
+  fireballEntityType: 0
 --- !u!1001 &2297100464143668562
 PrefabInstance:
   m_ObjectHideFlags: 0
