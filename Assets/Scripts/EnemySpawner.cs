@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,9 @@ public class EnemySpawner : MonoBehaviour, IDamageable
     public Material destroyedMaterial;
     public Material respawningMaterial;
 
+    private Tween moveTween;
+    private Tween rotateTween;
+
 
     void Start()
     {
@@ -37,6 +41,9 @@ public class EnemySpawner : MonoBehaviour, IDamageable
         isDestroyed = false;
         isRespawning = false;
         changeState(EnemySpawnerState.Idle);
+
+        moveTween = transform.DOMove(transform.position + Vector3.up, 4f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        rotateTween = transform.DORotate(new Vector3(0, 360, 0), 5f, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
     }
 
     void Update()
@@ -74,6 +81,9 @@ public class EnemySpawner : MonoBehaviour, IDamageable
         switch (currentState)
         {
             case EnemySpawnerState.Idle:
+                moveTween.Play();
+                rotateTween.Play();
+                
                 isIdleing = true;
                 StartCoroutine(WaitSecondsAndChangeState(idleTimer, EnemySpawnerState.Spawning));
                 meshRenderer.material = idleMaterial;
@@ -86,17 +96,23 @@ public class EnemySpawner : MonoBehaviour, IDamageable
                 break;
 
             case EnemySpawnerState.Respawning:
+                moveTween.Play();
+                rotateTween.Play();
+
                 isRespawning = true;
                 StartCoroutine(WaitSecondsAndChangeState(respawnTimer, EnemySpawnerState.Idle));
                 meshRenderer.material = respawningMaterial;
+
                 break;
 
             case EnemySpawnerState.Destroyed:
+                moveTween.Pause();
+                rotateTween.Pause();
+
                 isDestroyed = true;
                 StopAllCoroutines();
                 meshRenderer.material = destroyedMaterial;
                 StartCoroutine(WaitSecondsAndChangeState(destroyedTimer, EnemySpawnerState.Respawning));
-
                 break;
 
             default:
