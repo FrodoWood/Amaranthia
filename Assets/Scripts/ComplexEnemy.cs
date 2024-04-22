@@ -19,6 +19,8 @@ public class ComplexEnemy : Enemy
     private Ragdoll ragdoll;
     private float smoothDampInjuredVelocity;
     private AnimatorStateInfo animatorStateInfo;
+    private float movementTimer;
+
 
 
     [Header("Abilities")]
@@ -42,6 +44,7 @@ public class ComplexEnemy : Enemy
     protected override void Update()
     {
         base.Update();
+        movementTimer -= Time.deltaTime;
     }
 
     //IDLE
@@ -100,10 +103,12 @@ public class ComplexEnemy : Enemy
         if (PlayerInRange())
         {
             lastKnownPlayerPosition = player.position;
-            agent.SetDestination(GetRandomNavMeshWayPoint(transform.position,30f));
-            Debug.Log("Last known player position:" + lastKnownPlayerPosition);
-
-            if (DistanceToPlayer() <= attackRange && AnyAbilityAvailable())
+            if(movementTimer <= 0)
+            {
+                agent.SetDestination(GetRandomNavMeshWayPoint(transform.position,30f));
+                movementTimer = 0.5f;
+            }
+            if (DistanceToPlayer() <= attackRange && AnyAbilityAvailable() && Random.value < 0.8f)
             {
                 ChangeState(PickRandomAvailableAbility());
                 return;
@@ -190,7 +195,7 @@ public class ComplexEnemy : Enemy
     //ABILITY2
     protected override void OnEnterAbility2()
     {
-        animator.SetTrigger("Ability1");
+        animator.SetTrigger("Ability2");
         //ability2.TriggerAbility();
         agent.isStopped = true;
     }
@@ -307,14 +312,15 @@ public class ComplexEnemy : Enemy
         List<EnemyBaseAbility> enemyBaseAbilities = new List<EnemyBaseAbility>();
         enemyBaseAbilities.Add(ability1);
         enemyBaseAbilities.Add(ability2);
-        foreach(EnemyBaseAbility enemyBaseAbility in enemyBaseAbilities)
+        for (int i = enemyBaseAbilities.Count -1; i >= 0; i--)
         {
-            if (!enemyBaseAbility.Ready())
+            EnemyBaseAbility enemyBaseAbility = enemyBaseAbilities[i];
+            if(!enemyBaseAbility.Ready() || !enemyBaseAbility.isEnabled() || !enemyBaseAbility.enabled)
             {
-                enemyBaseAbilities.Remove(enemyBaseAbility);
+                enemyBaseAbilities.RemoveAt(i);
             }
         }
-        
+
         EnemyBaseAbility randomAbility = enemyBaseAbilities[Random.Range(0,enemyBaseAbilities.Count)];
         return randomAbility.GetAbilityState();
 

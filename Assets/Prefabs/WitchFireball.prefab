@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6506578884924520168}
   - component: {fileID: 7658983112980198006}
   - component: {fileID: -338479056948795335}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WitchFireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,8 @@ MonoBehaviour:
     type: 3}
   fireballExplodeSound: {fileID: 8300000, guid: 26d93439d29136f45a0ac9e33162011a,
     type: 3}
-  explosionVolume: 0.26
+  explosionVolume: 0.215
+  fireballVolume: 0.145
   fireballMixerGroup: {fileID: 24300002, guid: 372a553b838d2904ca9122e34d8b6daa, type: 2}
   fireballEntityType: 1
 --- !u!1001 &2506146582155921305
@@ -164,6 +165,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3237511073467624654}
     m_Modifications:
+    - target: {fileID: 647368912592388723, guid: 45eaa571c31aca74aba7c7dab5e827be,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4756172140107192646, guid: 45eaa571c31aca74aba7c7dab5e827be,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -238,6 +244,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WitchFireballParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117879726738445661, guid: 45eaa571c31aca74aba7c7dab5e827be,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7630996555752658803, guid: 45eaa571c31aca74aba7c7dab5e827be,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

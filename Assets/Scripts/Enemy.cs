@@ -125,7 +125,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
                 OnEnterAbility1();
                 break;
             case EnemyState.Ability2:
-                OnEnterAbility1();
+                OnEnterAbility2();
                 break;
         }
     }

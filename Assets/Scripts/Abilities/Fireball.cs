@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -10,7 +11,9 @@ public class Fireball : MonoBehaviour
     public AudioClip fireballInitialSound;
     public AudioClip fireballExplodeSound;
     [Range(0, 1f)]
-    public float explosionVolume;
+    public float explosionVolume;    
+    [Range(0, 1f)]
+    public float fireballVolume;
     public AudioMixerGroup fireballMixerGroup;
     public EntityType fireballEntityType;
 
@@ -22,6 +25,7 @@ public class Fireball : MonoBehaviour
         source.spatialBlend = 0f;
         source.playOnAwake = false;
         source.outputAudioMixerGroup = fireballMixerGroup;
+        source.volume = fireballVolume;
         source.Play();
         Destroy(audio, fireballInitialSound.length);
     }

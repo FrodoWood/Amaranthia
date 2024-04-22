@@ -30,17 +30,23 @@ public class WitchAbility2 : EnemyBaseAbility
         Debug.Log(abilityName + " ability used!");
         base.TriggerAbility(); // Starts the cooldown timer and sets the ability on cooldown
 
-        fireballTargetPosition = transform.position + Random.insideUnitSphere * 10;
-        GameObject newFireball = GameObject.Instantiate(witchFireballPrefab, fireballTargetPosition + Vector3.up * 30, Quaternion.identity);
+        for(int i = 0; i < 6; i++)
+        {
+            float angle = i * (360f/6) * Mathf.Deg2Rad;
 
-        Fireball fireball = newFireball.GetComponent<Fireball>();
-        fireball?.Setup(damage);
+            Vector3 spawnDirection = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+            Vector3 spawnPosition = transform.position + spawnDirection * 2f;
+            Quaternion rotation = Quaternion.LookRotation(spawnDirection);
+            GameObject newFireball = GameObject.Instantiate(witchFireballPrefab, spawnPosition + Vector3.up * 2, rotation);
 
-        Rigidbody fireballRigidbody = fireball.GetComponent<Rigidbody>();
-        fireballRigidbody?.AddForce(Vector3.down * fireballSpeed, ForceMode.Impulse);
+            Fireball fireball = newFireball.GetComponent<Fireball>();
+            fireball?.Setup(damage);
 
-        GameObject.Destroy(newFireball, 2f);
-
+            Rigidbody fireballRigidbody = fireball.GetComponent<Rigidbody>();
+            fireballRigidbody?.AddForce(newFireball.transform.forward * fireballSpeed, ForceMode.Impulse);
+            
+            GameObject.Destroy(newFireball, 2f);
+        }
 
     }
 

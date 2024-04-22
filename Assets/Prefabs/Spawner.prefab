@@ -133,13 +133,13 @@ MonoBehaviour:
   enemiesToSpawn:
   - prefab: {fileID: 3358375874516158943, guid: 003f1665d58f8234b9d809588f9c7045,
       type: 3}
-    amount: 2
+    amount: 1
   - prefab: {fileID: 6942381929336877415, guid: e0df83bdda171e4408c77b2d46158aa7,
       type: 3}
-    amount: 2
+    amount: 3
   - prefab: {fileID: 4642403330215562321, guid: 487a29add2a96154784947c62401be59,
       type: 3}
-    amount: 4
+    amount: 1
   spawnInterval: 1
   idleTimer: 15
   respawnTimer: 3
