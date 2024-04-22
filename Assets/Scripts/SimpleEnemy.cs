@@ -238,4 +238,34 @@ public class SimpleEnemy : Enemy
         float newWeight = Mathf.SmoothDamp(currentWeight, targetWeight, ref smoothDampInjuredVelocity,smoothTime);
         animator.SetLayerWeight(layerIndex, newWeight);
     }
+
+    protected override void UpdateAbility1()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void UpdateAbility2()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void OnEnterAbility1()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void OnEnterAbility2()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void OnExitAbility1()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void OnExitAbility2()
+    {
+        throw new NotImplementedException();
+    }
 }

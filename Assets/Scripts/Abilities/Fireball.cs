@@ -6,13 +6,13 @@ using UnityEngine.Audio;
 public class Fireball : MonoBehaviour
 {
     private float damage;
-    private PlayerController player;
     public GameObject collisionParticlesPrefab;
     public AudioClip fireballInitialSound;
     public AudioClip fireballExplodeSound;
     [Range(0, 1f)]
     public float explosionVolume;
     public AudioMixerGroup fireballMixerGroup;
+    public EntityType fireballEntityType;
 
     void Start()
     {
@@ -31,10 +31,9 @@ public class Fireball : MonoBehaviour
         Destroy(gameObject, 4f);
     }
 
-    public void Setup(float fireballDamage, PlayerController playerController)
+    public void Setup(float fireballDamage)
     {
         damage = fireballDamage;
-        player = playerController;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -58,7 +57,7 @@ public class Fireball : MonoBehaviour
         }
         
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-        damageable?.TakeDamage(damage, EntityType.Allied);
+        damageable?.TakeDamage(damage, fireballEntityType);
         
 
         IRagdoll ragdoll = collision.gameObject.GetComponent<IRagdoll>();

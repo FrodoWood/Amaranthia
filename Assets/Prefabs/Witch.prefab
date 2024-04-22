@@ -903,6 +903,8 @@ GameObject:
   - component: {fileID: 5320229246586966776}
   - component: {fileID: 8947641366672592706}
   - component: {fileID: 8442194271233789113}
+  - component: {fileID: 3420816973156246072}
+  - component: {fileID: 3214165333221967240}
   m_Layer: 6
   m_Name: Witch
   m_TagString: Untagged
@@ -960,12 +962,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882ac47fb2b766d4fb3fe0f2e73f187f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   enemyData: {fileID: 11400000, guid: 88404281be561874d9535b1fa47d66bf, type: 2}
   currentHealth: 0
   maxHealth: 0
   damage: 0
-  visionRange: 30
-  attackRange: 5
+  visionRange: 50
+  attackRange: 30
   attackCooldown: 1
   canAttack: 0
   patrolRadius: 20
@@ -1016,6 +1019,52 @@ CapsuleCollider:
   m_Height: 2.61
   m_Direction: 1
   m_Center: {x: 0, y: 0.98, z: 0}
+--- !u!114 &3420816973156246072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3063018766110727587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810cb79d641f266428553841477229c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityEnabled: 1
+  onCooldown: 0
+  baseCooldown: 5
+  cooldown: 0
+  duration: 0
+  abilityName: Heaven Fireball
+  fireballSpeed: 25
+  baseDamage: 10
+  damage: 10
+  witchFireballPrefab: {fileID: 4355661808055307274, guid: 0ccac586291dfc04a8dae34f0d210ca6,
+    type: 3}
+--- !u!114 &3214165333221967240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3063018766110727587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803b3cbeb5b7b99489b361c6e99287cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityEnabled: 1
+  onCooldown: 0
+  baseCooldown: 5
+  cooldown: 0
+  duration: 0
+  abilityName: 
+  fireballSpeed: 25
+  baseDamage: 10
+  damage: 10
+  witchFireballPrefab: {fileID: 4355661808055307274, guid: 0ccac586291dfc04a8dae34f0d210ca6,
+    type: 3}
 --- !u!1 &3090256337059680454
 GameObject:
   m_ObjectHideFlags: 0

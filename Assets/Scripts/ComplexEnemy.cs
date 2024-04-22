@@ -11,7 +11,6 @@ public class ComplexEnemy : Enemy
 {
     [SerializeField] private float patrolRadius = 20f;
     [SerializeField] private float perlinScale = 3f;
-    private Vector3 spawnPosition;
     private Color chaseColour = new Color(1f, 0f, 0f, 0.3f);
     private Color patrolColour = new Color(0f, 1f, 0f, 0.3f);
     public static event Action onDeath;
@@ -19,12 +18,24 @@ public class ComplexEnemy : Enemy
     public bool hasRagdoll = false;
     private Ragdoll ragdoll;
     private float smoothDampInjuredVelocity;
+    private AnimatorStateInfo animatorStateInfo;
+
+
+    [Header("Abilities")]
+    private WitchAbility1 ability1;
+    private WitchAbility2 ability2;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        ability1 = GetComponent<WitchAbility1>();
+        ability2 = GetComponent<WitchAbility2>();
+    }
 
     protected override void Start()
     {
         ragdoll = GetComponent<Ragdoll>();
         base.Start();
-        spawnPosition = transform.position + Random.insideUnitSphere * 2;
         canAttack = true;
         gemPrefab = enemyData.gemPrefab;
     }
@@ -79,12 +90,47 @@ public class ComplexEnemy : Enemy
         agent.ResetPath();
     }
 
+    //CHASING
+    protected override void OnEnterChasing()
+    {
+        animator.SetTrigger("Chasing");
+    }
+    protected override void UpdateChasing()
+    {
+        if (PlayerInRange())
+        {
+            lastKnownPlayerPosition = player.position;
+            agent.SetDestination(lastKnownPlayerPosition);
+            Debug.Log("Last known player position:" + lastKnownPlayerPosition);
+
+            if (DistanceToPlayer() <= attackRange && AnyAbilityAvailable())
+            {
+                ChangeState(PickRandomAvailableAbility());
+                return;
+            }
+            
+        }
+        // If the player is out of range => the enemy should go to the last known position of the player and then switch to idle
+        if (!PlayerInRange())
+        {
+            ChangeState(EnemyState.Idle);
+            return;
+        }
+
+
+    }
+    protected override void OnExitChasing()
+    {
+
+    }
+
     //ATTACKING
     protected override void OnEnterAttacking()
     {
         Debug.Log($"{enemyName} Entered Attacking");
-        agent.ResetPath();
-        // play attack animation
+        //agent.ResetPath();
+        // pick which ability to use
+
     }
     protected override void UpdateAttacking()
     {
@@ -118,37 +164,40 @@ public class ComplexEnemy : Enemy
 
     }
 
-    //CHASING
-    protected override void OnEnterChasing()
+    //ABILITY1
+    protected override void OnEnterAbility1()
     {
-        base.OnEnterChasing();
-        animator.SetTrigger("Chasing");
+        animator.SetTrigger("Ability1");
+        ability1.TriggerAbility();
+        agent.isStopped = true;
     }
-    protected override void UpdateChasing()
+    protected override void UpdateAbility1()
     {
-        if (PlayerInRange())
+        if (CurrentAnimationFinished())
         {
-            lastKnownPlayerPosition = player.position;
-            agent.SetDestination(lastKnownPlayerPosition);
-
-            if (DistanceToPlayer() <= attackRange)
-            {
-                ChangeState(EnemyState.Attacking);
-                return;
-            }
+            ChangeState(EnemyState.Patrolling);
         }
-        // If the player is out of range => the enemy should go to the last known position of the player and then switch to idle
-        if (!PlayerInRange() && (agent.remainingDistance - agent.stoppingDistance) < 0.5f)
-        {
-            ChangeState(EnemyState.Idle);
-            return;
-        }
-
-
     }
-    protected override void OnExitChasing()
+    protected override void OnExitAbility1()
     {
+    }
 
+    //ABILITY2
+    protected override void OnEnterAbility2()
+    {
+        animator.SetTrigger("Ability1");
+        ability1.TriggerAbility();
+        agent.isStopped = true;
+    }
+    protected override void UpdateAbility2()
+    {
+        if (CurrentAnimationFinished())
+        {
+            ChangeState(EnemyState.Patrolling);
+        }
+    }
+    protected override void OnExitAbility2()
+    {
     }
 
     //DEAD
@@ -237,4 +286,36 @@ public class ComplexEnemy : Enemy
         float newWeight = Mathf.SmoothDamp(currentWeight, targetWeight, ref smoothDampInjuredVelocity, smoothTime);
         animator.SetLayerWeight(layerIndex, newWeight);
     }
+
+
+    private bool AnyAbilityAvailable()
+    {
+        return ability1.Ready();
+    }
+
+    private EnemyState PickRandomAvailableAbility()
+    {
+        List<EnemyBaseAbility> enemyBaseAbilities = new List<EnemyBaseAbility>();
+        enemyBaseAbilities.Add(ability1);
+        enemyBaseAbilities.Add(ability2);
+        foreach(EnemyBaseAbility enemyBaseAbility in enemyBaseAbilities)
+        {
+            if (!enemyBaseAbility.Ready())
+            {
+                enemyBaseAbilities.Remove(enemyBaseAbility);
+            }
+        }
+        
+        EnemyBaseAbility randomAbility = enemyBaseAbilities[Random.Range(0,enemyBaseAbilities.Count)];
+        return randomAbility.GetAbilityState();
+
+    }
+
+    public bool CurrentAnimationFinished()
+    {
+        animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (animatorStateInfo.normalizedTime >= 1 && !animator.IsInTransition(0)) return true;
+        else return false;
+    }
+
 }

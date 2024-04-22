@@ -11,11 +11,13 @@ public enum EnemyState
     Attacking,
     Patrolling,
     Chasing,
-    Dead
+    Dead,
+    Ability1,
+    Ability2
 }
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
-    protected EnemyState currentState;
+    public EnemyState currentState;
 
     protected string enemyName;
     public EnemyData enemyData;
@@ -34,7 +36,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected bool canAttack;
     protected Vector3 lastKnownPlayerPosition;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
@@ -82,6 +84,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             case EnemyState.Dead:
                 UpdateDead();
                 break;
+            case EnemyState.Ability1:
+                UpdateAbility1();
+                break;
+            case EnemyState.Ability2:
+                UpdateAbility2();
+                break;
         }
     }
     protected abstract void UpdateIdle();
@@ -89,6 +97,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected abstract void UpdatePatrolling();
     protected abstract void UpdateChasing();
     protected abstract void UpdateDead();
+    protected abstract void UpdateAbility1();
+    protected abstract void UpdateAbility2();
 
     
 
@@ -111,6 +121,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             case EnemyState.Dead:
                 OnEnterDead();
                 break;
+            case EnemyState.Ability1:
+                OnEnterAbility1();
+                break;
+            case EnemyState.Ability2:
+                OnEnterAbility1();
+                break;
         }
     }
 
@@ -123,6 +139,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected abstract void OnEnterPatrolling();
     protected abstract void OnEnterAttacking();
     protected abstract void OnEnterIdle();
+    protected abstract void OnEnterAbility1();
+    protected abstract void OnEnterAbility2();
 
     protected virtual void OnExitState(EnemyState currentState)
     {
@@ -143,6 +161,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             case EnemyState.Dead:
                 OnExitDead();
                 break;
+            case EnemyState.Ability1:
+                OnExitAbility1();
+                break;
+            case EnemyState.Ability2:
+                OnExitAbility2();
+                break;
         }
     }
 
@@ -151,6 +175,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected abstract void OnExitPatrolling();
     protected abstract void OnExitAttacking();
     protected abstract void OnExitIdle();
+    protected abstract void OnExitAbility1();
+    protected abstract void OnExitAbility2();
 
     public virtual void TakeDamage(float amount, EntityType entityType)
     {
