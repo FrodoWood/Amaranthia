@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private GameState currentState;
     public int maxEnemyCount = 60;
     public int currentEnemyCount;
+    public bool isGamePaused = false;
 
     private void Awake()
     {

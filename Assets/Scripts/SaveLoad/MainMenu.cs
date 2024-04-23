@@ -16,7 +16,11 @@ public class MainMenu : MonoBehaviour
         {
             continueButton.interactable = false;
         }
+
+        UpdateHighScoreText();
+
     }
+
     public void OnNewGame()
     {
         SaveLoadManager.instance.NewGame();
@@ -25,6 +29,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnContinueGame()
     {
+        SaveLoadManager.instance.LoadGame();
         SceneManager.LoadSceneAsync(1);
     }
 
