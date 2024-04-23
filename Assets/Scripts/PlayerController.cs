@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.AI;
 using System;
+using TMPro;
 
 public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 {
@@ -36,7 +37,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     [SerializeField] private float maxHealth;
     [SerializeField] private Healthbar healthbar;
     [SerializeField] private Healthbar hudHealthbar;
-
+    private bool insideTrigger;
+    private bool saveTrigger = false;
 
     private void Awake()
     {
@@ -67,6 +69,23 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
         UpdateState(currentState);
 
         UpdateStats();
+
+        CheckInteractInput();
+    }
+
+    private void CheckInteractInput()
+    {
+        if(insideTrigger)
+        {
+            if (input.Main.Save.triggered)
+            {
+                saveTrigger = true;
+            }
+        }
+        else
+        {
+            saveTrigger = false;
+        }
     }
 
     private void UpdateStats()
@@ -268,7 +287,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     }
     private void UpdateE()
     {
-        ClickToMove();
+        //ClickToMove();
         if (abilityE.Complete())
         {
             if (CheckAbilityTrigger()) HandleAbilityTrigger();
@@ -455,5 +474,24 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
         animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (animatorStateInfo.normalizedTime >= 1 && !animator.IsInTransition(0)) return true;
         else return false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(saveTrigger)
+        {
+            IInteractable interactable = other.GetComponent<IInteractable>();
+            interactable?.OnInteract();
+            Debug.Log("InsideSaveTrigger");
+            saveTrigger = false;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        insideTrigger = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        insideTrigger = false;
     }
 }

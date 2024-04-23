@@ -71,6 +71,15 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Save"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae5c117e-8a80-4426-b64e-3cd938a077ce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -128,6 +137,17 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                     ""action"": ""R"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33e4f6e4-27e6-4028-b91b-3ddec1c1bbaf"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Save"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -141,6 +161,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
         m_Main_W = m_Main.FindAction("W", throwIfNotFound: true);
         m_Main_E = m_Main.FindAction("E", throwIfNotFound: true);
         m_Main_R = m_Main.FindAction("R", throwIfNotFound: true);
+        m_Main_Save = m_Main.FindAction("Save", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_W;
     private readonly InputAction m_Main_E;
     private readonly InputAction m_Main_R;
+    private readonly InputAction m_Main_Save;
     public struct MainActions
     {
         private @CustomActions m_Wrapper;
@@ -216,6 +238,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
         public InputAction @W => m_Wrapper.m_Main_W;
         public InputAction @E => m_Wrapper.m_Main_E;
         public InputAction @R => m_Wrapper.m_Main_R;
+        public InputAction @Save => m_Wrapper.m_Main_Save;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -240,6 +263,9 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
             @R.started += instance.OnR;
             @R.performed += instance.OnR;
             @R.canceled += instance.OnR;
+            @Save.started += instance.OnSave;
+            @Save.performed += instance.OnSave;
+            @Save.canceled += instance.OnSave;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -259,6 +285,9 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
             @R.started -= instance.OnR;
             @R.performed -= instance.OnR;
             @R.canceled -= instance.OnR;
+            @Save.started -= instance.OnSave;
+            @Save.performed -= instance.OnSave;
+            @Save.canceled -= instance.OnSave;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -283,5 +312,6 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
         void OnW(InputAction.CallbackContext context);
         void OnE(InputAction.CallbackContext context);
         void OnR(InputAction.CallbackContext context);
+        void OnSave(InputAction.CallbackContext context);
     }
 }

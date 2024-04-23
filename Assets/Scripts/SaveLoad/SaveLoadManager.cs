@@ -59,6 +59,7 @@ public class SaveLoadManager : MonoBehaviour
     public void NewGame()
     {
         this.gameData = new GameData();
+        this.gameData.playerPosition = new Vector3(27.5f, 2f, -380f);
     }
 
     public void LoadGame()
@@ -88,7 +89,6 @@ public class SaveLoadManager : MonoBehaviour
             Debug.LogWarning("No data found.");
             return;
         }
-        Debug.Log("OnGameSave event evoked!");
         // give gameData to other scripts so they can update it
         foreach (ISaveable saveable in saveables)
         {
@@ -98,6 +98,7 @@ public class SaveLoadManager : MonoBehaviour
         dataHandler.Save(gameData);
         // Invoke OnGameSave event so that remote highscore can be updated 
         OnGameSave?.Invoke();
+        Debug.Log("OnGameSave event evoked!");
     }
 
     private List<ISaveable> FindAllSaveables()
