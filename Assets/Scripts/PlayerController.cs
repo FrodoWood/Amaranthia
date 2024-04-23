@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     private void Start()
     {
-        currentHealth = maxHealth;
         healthbar.UpdateHealthbar(maxHealth, currentHealth);
         hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
 
@@ -462,11 +461,15 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     public void LoadData(GameData data)
     {
         agent.Warp(data.playerPosition);
+        currentHealth = data.currentHealth;
+        maxHealth = data.maxHealth;
     }
 
     public void SaveData(ref GameData data)
     {
         data.playerPosition = transform.position;
+        data.currentHealth = currentHealth;
+        data.maxHealth = maxHealth;
     }
 
     public bool CurrentAnimationFinished()

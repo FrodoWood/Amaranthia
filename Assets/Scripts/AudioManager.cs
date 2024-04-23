@@ -106,4 +106,14 @@ public class AudioManager : MonoBehaviour
     {
         PlayClipOnce("sound_win_01");
     }
+
+    private void OnEnable()
+    {
+        LevelsManager.OnLevelUp += PlayWinSound;
+    }
+
+    private void OnDisable()
+    {
+        LevelsManager.OnLevelUp -= PlayWinSound;
+    }
 }

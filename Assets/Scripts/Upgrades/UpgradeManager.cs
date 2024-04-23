@@ -36,16 +36,30 @@ public class UpgradeManager : MonoBehaviour
     [ContextMenu("Display upgrades")]
     public void DisplayUpgradeChoices()
     {
-        for(int i = 0; i<Mathf.Min(3, upgradesPool.Count); i++)
-        {
-            Upgrade upgrade = upgradesPool[i];
-            upgradesPool = upgradesPool.OrderBy(upgrade => Random.value).ToList();
-            GameObject upgradeUI = Instantiate(upgradeUIPrefab, upgradeUIParent);
-            upgradeUI.GetComponentInChildren<TextMeshProUGUI>().text = upgrade.GetName();
-            Vector3 newPosition = upgradeUIParent.position + Vector3.right * i * 100f;
-            upgradeUI.transform.position = newPosition;
-            upgradeUI.GetComponentInChildren<Button>().onClick.AddListener(() => ActivateUpgrade(upgrade));
+        GameObject upgradeUI = Instantiate(upgradeUIPrefab, upgradeUIParent);
+        List<UpgradeButton> upgradeButtons = upgradeUI.GetComponentsInChildren<UpgradeButton>().ToList();
+        Debug.Log("Thre are " +  upgradeButtons.Count + "buttons");
 
+        List<Upgrade> inactiveUpgrades = upgradesPool.Where(upgrade => !upgrade.isActivated).ToList();
+        inactiveUpgrades = inactiveUpgrades.OrderBy(upgrade => Random.value).ToList();
+
+        for (int i = 0; i<Mathf.Min(3, inactiveUpgrades.Count); i++)
+        {
+            Upgrade upgrade = inactiveUpgrades[i];
+            UpgradeButton upgradeButton = upgradeButtons[i];
+            upgradeButton?.SetUpgradeName(upgrade.GetName());
+            upgradeButton?.SetUpgradeDescription(upgrade.GetDescription());
+            upgradeButton.GetComponentInChildren<Button>().onClick.AddListener(() => ActivateUpgrade(upgrade));
+            upgradeButton?.CompleteSetup();
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            UpgradeButton upgradeButton = upgradeButtons[i];
+            if(!upgradeButton.IsSetup())
+            {
+                Destroy(upgradeButton.gameObject);
+            }
         }
     }
 
@@ -61,5 +75,15 @@ public class UpgradeManager : MonoBehaviour
             GameObject upgradeUIGameObject = upgradeUIParent.GetChild(i).gameObject;
             Destroy(upgradeUIGameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        LevelsManager.OnLevelUp += DisplayUpgradeChoices;
+    }
+
+    private void OnDisable()
+    {
+        LevelsManager.OnLevelUp -= DisplayUpgradeChoices;
     }
 }

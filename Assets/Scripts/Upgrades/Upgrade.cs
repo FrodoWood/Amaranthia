@@ -6,7 +6,6 @@ public class Upgrade : MonoBehaviour, ISaveable
 {
     public UpgradeSO upgradeSO;
     [SerializeField] private string id;
-    public string upgradeCustomName;
     [ContextMenu("Generate GUID")]
     private void GenerateGuid()
     {
@@ -33,6 +32,11 @@ public class Upgrade : MonoBehaviour, ISaveable
     public string GetName()
     {
         return upgradeSO.name;
+    }
+
+    public string GetDescription()
+    {
+        return upgradeSO.upgradeDescription;
     }
 
     public void LoadData(GameData data)

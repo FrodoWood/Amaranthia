@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class UpgradeSO : ScriptableObject
 {
     public string upgradeName = "Upgrade";
+    public string upgradeDescription = "Description";
     protected PlayerStats playerStats;
 
     public virtual void OnStart()

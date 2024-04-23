@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,20 +7,21 @@ public class LevelsManager : MonoBehaviour, ISaveable
 {
     public int baseLevel = 1;
     public int currentLevel;
-    public float currentExp;
+    public float currentExp = 0;
     public float totalExp;
     public float maxExp = 100;
     public LevelsBar levelsBar;
+    public static event Action OnLevelUp;
     private void Update()
     {
         if(currentExp >= maxExp) IncreaseLevel();
-        levelsBar.UpdateLevelsBar(maxExp, currentExp, currentLevel);
+        levelsBar.UpdateLevelsBar(maxExp, currentExp, currentLevel, totalExp);
     }
 
     private void Start()
     {
         //currentLevel = baseLevel;
-        currentExp = 0;
+        levelsBar.UpdateLevelsBar(maxExp, currentExp, currentLevel, totalExp);
     }
 
     public void LoadData(GameData data)
@@ -40,6 +42,7 @@ public class LevelsManager : MonoBehaviour, ISaveable
     {
         currentLevel += 1;
         currentExp = 0f;
+        OnLevelUp?.Invoke();
     }
 
     public void AddExp(float _exp)
