@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public static event Action OnNewGamePlayTimeline;
     private TimelineController newSceneTimeline;
     private GameState currentState;
+    public int maxEnemyCount = 60;
+    public int currentEnemyCount;
 
     private void Awake()
     {

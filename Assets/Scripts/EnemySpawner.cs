@@ -23,6 +23,7 @@ public class EnemySpawner : MonoBehaviour, IDamageable
     [SerializeField] private float destroyedTimer = 10f;
     [SerializeField] private Transform spawnPoint;
 
+
     private MeshRenderer meshRenderer;
     public Material idleMaterial;
     public Material spawningMaterial;
@@ -155,7 +156,12 @@ public class EnemySpawner : MonoBehaviour, IDamageable
             {
                 for (int i = 0; i < enemy.amount; i++)
                 {
+                    if (GameManager.instance.currentEnemyCount >= GameManager.instance.maxEnemyCount)
+                    {
+                        break;
+                    }
                     Instantiate(enemy.prefab, spawnPoint.position, Quaternion.identity);
+                    GameManager.instance.currentEnemyCount++;
                     yield return new WaitForSeconds(interval);
                 }
             }

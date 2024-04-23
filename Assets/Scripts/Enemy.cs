@@ -130,7 +130,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    protected abstract void OnEnterDead();
+    protected virtual void OnEnterDead()
+    {
+        GameManager.instance.currentEnemyCount--;
+    }
     protected virtual void OnEnterChasing()
     {
         agent.SetDestination(player.position);

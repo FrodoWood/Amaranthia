@@ -60,7 +60,7 @@ public class SaveLoadManager : MonoBehaviour
     public void NewGame()
     {
         this.gameData = new GameData();
-        this.gameData.playerPosition = new Vector3(27.5f, 2f, -380f);
+        this.gameData.playerPosition = new Vector3(28.53f, 0f, -357.6f);
         OnNewGame?.Invoke();
     }
 

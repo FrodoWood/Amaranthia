@@ -14,13 +14,7 @@ public class TimelineController : MonoBehaviour
 
     void Update()
     {
-        // Check if the Timeline has finished playing
-        if (timelineDirector.state == PlayState.Paused)
-        {
-            // Timeline has finished playing, do something
-            Debug.Log("Timeline has finished playing");
-            Destroy(gameObject);
-        }
+        
     }
 
     public void StartTimeline()

@@ -51,11 +51,13 @@ public class LevelsManager : MonoBehaviour, ISaveable
     private void OnEnable()
     {
         SimpleEnemy.onDeath += HandleEnemyDeath;
+        ComplexEnemy.onDeath += HandleEnemyDeath;
     }
 
     private void OnDisable()
     {
         SimpleEnemy.onDeath -= HandleEnemyDeath;
+        ComplexEnemy.onDeath -= HandleEnemyDeath;
     }
 
     public void HandleEnemyDeath()
