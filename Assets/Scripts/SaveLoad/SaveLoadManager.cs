@@ -13,6 +13,7 @@ public class SaveLoadManager : MonoBehaviour
     private List<ISaveable> saveables;
     public static SaveLoadManager instance { get; private set; }
     public static event Action OnGameSave;
+    public static event Action OnNewGame;
 
     public void Awake()
     {
@@ -60,6 +61,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         this.gameData = new GameData();
         this.gameData.playerPosition = new Vector3(27.5f, 2f, -380f);
+        OnNewGame?.Invoke();
     }
 
     public void LoadGame()
