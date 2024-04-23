@@ -34,9 +34,10 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
     [Header("Health")]
     [SerializeField] private float currentHealth;
-    [SerializeField] private float maxHealth;
+    private float maxHealth;
     [SerializeField] private Healthbar healthbar;
     [SerializeField] private Healthbar hudHealthbar;
+    public float healthRegen;
     private bool insideTrigger;
     private bool saveTrigger = false;
 
@@ -70,6 +71,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
         UpdateStats();
 
         CheckInteractInput();
+
+        HealthRegen();
     }
 
     private void CheckInteractInput()
@@ -90,6 +93,9 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     private void UpdateStats()
     {
         agent.speed = playerStats.movementSpeed;
+        healthRegen = playerStats.healthRegen;
+        maxHealth = playerStats.maxHealth;
+        
     }
     private void ChangeState(PlayerState newState)
     {
@@ -462,16 +468,27 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     {
         agent.Warp(data.playerPosition);
         currentHealth = data.currentHealth;
-        maxHealth = data.maxHealth;
+        if(currentHealth <= 0)
+        {
+            currentHealth = playerStats.maxHealth;
+        }
     }
 
     public void SaveData(ref GameData data)
     {
         data.playerPosition = transform.position;
         data.currentHealth = currentHealth;
-        data.maxHealth = maxHealth;
     }
 
+    private void HealthRegen()
+    {
+        if(currentHealth < maxHealth)
+        {
+            currentHealth += healthRegen * Time.deltaTime;
+            healthbar.UpdateHealthbar(maxHealth, currentHealth);
+            hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
+        }
+    }
     public bool CurrentAnimationFinished()
     {
         animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);

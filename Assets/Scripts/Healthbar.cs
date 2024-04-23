@@ -8,6 +8,8 @@ public class Healthbar : MonoBehaviour
     [SerializeField] private Image healthbarSprite;
     private Camera cam;
     [SerializeField] bool isHudHealthbar;
+    public Transform player;
+    public float healthbarHeight;
 
     private void Start()
     {
@@ -24,6 +26,7 @@ public class Healthbar : MonoBehaviour
         if (!isHudHealthbar)
         {
             transform.rotation = cam.transform.rotation;
+            transform.position = player.position + new Vector3(0, healthbarHeight, 0);
         }
     }
 }

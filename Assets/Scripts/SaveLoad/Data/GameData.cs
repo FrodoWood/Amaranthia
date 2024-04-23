@@ -20,8 +20,8 @@ public class GameData
         this.score = 0;
         this.currentExp = 0;
         this.totalExp = 0;
-        this.currentHealth = 100;
-        this.maxHealth = 100;
+        //this.currentHealth = 100;
+        //this.maxHealth = 100;
         this.playerPosition = Vector3.zero;
         this.upgradesActivated = new SerializableDictionary<string, bool>();
     }

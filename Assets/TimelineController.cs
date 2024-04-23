@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 public class TimelineController : MonoBehaviour
 {
     PlayableDirector timelineDirector;
+    public GameObject HUD;
 
     private void Awake()
     {
@@ -14,13 +15,13 @@ public class TimelineController : MonoBehaviour
 
     void Update()
     {
-        
     }
 
     public void StartTimeline()
     {
-        Debug.Log("Playing timelinne");
         timelineDirector?.Play();
+        HUD.SetActive(false);
+        Debug.Log("Playing timelinne");
     }
 
     public void StopTimeline()
@@ -28,13 +29,21 @@ public class TimelineController : MonoBehaviour
         timelineDirector?.Stop();
     }
 
+    private void OnDirectorStopped(PlayableDirector director)
+    {
+        HUD.SetActive(true);
+    }
+
     private void OnEnable()
     {
         GameManager.OnNewGamePlayTimeline += StartTimeline;
+        timelineDirector.stopped += OnDirectorStopped;
     }
 
     private void OnDisable()
     {
         GameManager.OnNewGamePlayTimeline -= StartTimeline;
+        timelineDirector.stopped -= OnDirectorStopped;
+
     }
 }

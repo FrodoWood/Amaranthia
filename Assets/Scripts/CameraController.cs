@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
         if(!Mathf.Approximately(transform.rotation.eulerAngles.x, 70f))
         {
             Quaternion targetRotation = Quaternion.Euler(70f, 0f, 0f);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 4f * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 15f * Time.deltaTime);
         }
         Vector3 desiredPosition = new Vector3(target.position.x + offset.x, target.position.y + offset.y, target.position.z + offset.z);
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
