@@ -19,6 +19,8 @@ public class SimpleEnemy : Enemy
     public bool hasRagdoll = false;
     private Ragdoll ragdoll;
     private float smoothDampInjuredVelocity;
+    public float destinationRequestInterval = 0.5f;
+    private float destinationRequestTimer = 0f;
 
     protected override void Start()
     {
@@ -27,11 +29,13 @@ public class SimpleEnemy : Enemy
         spawnPosition = transform.position + Random.insideUnitSphere * 2;
         canAttack = true;
         gemPrefab = enemyData.gemPrefab;
+        destinationRequestTimer = destinationRequestInterval;
     }
     protected override void Update()
     {
         base.Update();
         UpdateInjuredLayerWeight();
+        destinationRequestTimer -= Time.deltaTime;
     }
 
     //IDLE
@@ -67,9 +71,10 @@ public class SimpleEnemy : Enemy
     }
     protected override void UpdatePatrolling()
     {
-        if(!agent.pathPending && (agent.remainingDistance - agent.stoppingDistance) < 0.5f)
+        if(!agent.pathPending && (agent.remainingDistance - agent.stoppingDistance) < 0.1f && destinationRequestTimer <= 0f)
         {
             agent.SetDestination(GetRandomNavMeshWayPoint(transform.position, patrolRadius));
+            destinationRequestTimer = destinationRequestInterval;
             if (Random.value < 0f) ChangeState(EnemyState.Idle);
         }
         if (PlayerInRange() && !GameManager.instance.player.IsDead()) ChangeState(EnemyState.Chasing);
@@ -127,10 +132,11 @@ public class SimpleEnemy : Enemy
     }
     protected override void UpdateChasing()
     {
-        if (PlayerInRange())
+        if (PlayerInRange() && destinationRequestTimer <= 0)
         {
             lastKnownPlayerPosition = player.position;
             agent.SetDestination(lastKnownPlayerPosition);
+            destinationRequestTimer = destinationRequestInterval;
 
             if (DistanceToPlayer() <= attackRange)
             {

@@ -20,7 +20,8 @@ public class ComplexEnemy : Enemy
     private float smoothDampInjuredVelocity;
     private AnimatorStateInfo animatorStateInfo;
     private float movementTimer;
-
+    public float destinationRequestInterval = 0.5f;
+    private float destinationRequestTimer = 0f;
 
 
     [Header("Abilities")]
@@ -40,11 +41,13 @@ public class ComplexEnemy : Enemy
         base.Start();
         canAttack = true;
         gemPrefab = enemyData.gemPrefab;
+        destinationRequestTimer = destinationRequestInterval;
     }
     protected override void Update()
     {
         base.Update();
         movementTimer -= Time.deltaTime;
+        destinationRequestTimer -= Time.deltaTime;
     }
 
     //IDLE
@@ -80,9 +83,10 @@ public class ComplexEnemy : Enemy
     }
     protected override void UpdatePatrolling()
     {
-        if (!agent.pathPending && (agent.remainingDistance - agent.stoppingDistance) < 0.5f)
+        if (!agent.pathPending && (agent.remainingDistance - agent.stoppingDistance) < 0.5f && destinationRequestTimer <= 0)
         {
             agent.SetDestination(GetRandomNavMeshWayPoint(transform.position, patrolRadius));
+            destinationRequestTimer = destinationRequestInterval;
             if (Random.value < 0f) ChangeState(EnemyState.Idle);
         }
         if (PlayerInRange() && !GameManager.instance.player.IsDead()) ChangeState(EnemyState.Chasing);

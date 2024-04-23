@@ -352,7 +352,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, clickableLayers))
         {
-            agent.destination = hit.point;
+            agent.SetDestination(hit.point);
             if(clickEffect != null)
             {
                 Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
