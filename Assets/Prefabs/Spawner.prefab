@@ -136,10 +136,13 @@ MonoBehaviour:
     amount: 2
   - prefab: {fileID: 6942381929336877415, guid: e0df83bdda171e4408c77b2d46158aa7,
       type: 3}
-    amount: 2
+    amount: 3
   - prefab: {fileID: 4642403330215562321, guid: 487a29add2a96154784947c62401be59,
       type: 3}
     amount: 2
+  - prefab: {fileID: 3063018766110727587, guid: 7e7b46fc3e379af4ab0ad408613772fc,
+      type: 3}
+    amount: 1
   spawnInterval: 1
   idleTimer: 15
   respawnTimer: 3

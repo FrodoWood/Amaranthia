@@ -122,15 +122,32 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SaveLoadManager.OnNewGame += HandleNewGame;
+        SaveLoadManager.OnLoadGame += HandleLoadedGame;
     }
     private void OnDisable()
     {
         SaveLoadManager.OnNewGame -= HandleNewGame;
+        SaveLoadManager.OnLoadGame -= HandleLoadedGame;
+
     }
 
     private void HandleNewGame()
     {
         //OnNewGamePlayTimeline?.Invoke();
         ChangeState(GameState.NewGame);
+        currentEnemyCount  = 0;
+    }    
+    private void HandleLoadedGame()
+    {
+        //OnNewGamePlayTimeline?.Invoke();
+        //ChangeState(GameState.NewGame);
+        currentEnemyCount  = 0;
+    }
+
+    private void HandleEndGame()
+    {
+        Debug.Log("HANDLING END GAME");
+        GameObject defeatUI = GameObject.Find("DefeatUI");
+        defeatUI.SetActive(true);
     }
 }

@@ -39,6 +39,11 @@ public class AudioManager : MonoBehaviour
         audioSources[0].Play();
     }
 
+    private void Update()
+    {
+   
+    }
+
     public void SmoothTransition(string clipName)
     {
         AudioClip newClip = audioClips.Find(clip => clip.name == clipName);
@@ -56,14 +61,16 @@ public class AudioManager : MonoBehaviour
         AudioSource currentSource = GetCurrentPlayingSource();
         AudioSource newSource = audioSources.Find(source => source.clip == newClip);
 
+        if(newSource == currentSource) yield break;
+
         float timer = 0f;
         float initialVolume = currentSource.volume;
         newSource.Play();
         while(timer < transitionDuration)
         {
             float t = timer / transitionDuration;
-            currentSource.volume = Mathf.Lerp(initialVolume, 0f, t);
-            newSource.volume = Mathf.Lerp(0f, initialVolume, t);
+            currentSource.volume = Mathf.Lerp(0.5f, 0f, t);
+            newSource.volume = Mathf.Lerp(0f, 0.5f, t);
             timer += Time.deltaTime;
             yield return null;
         }
@@ -101,6 +108,11 @@ public class AudioManager : MonoBehaviour
         SmoothTransition("theme_combat_02");
     }
     
+    public void SwitchToMainTheme()
+    {
+        SmoothTransition("theme_main_01");
+    }
+    
     [ContextMenu("PlayWinSound")]
     public void PlayWinSound()
     {
@@ -110,10 +122,17 @@ public class AudioManager : MonoBehaviour
     private void OnEnable()
     {
         LevelsManager.OnLevelUp += PlayWinSound;
+        PlayerController.OnHighHealth += SwitchToMainTheme;
+        PlayerController.OnLowHealth += SwitchToCombatTheme;
+        PlayerController.OnPlayerDeath += SwitchToCombatTheme;
     }
 
     private void OnDisable()
     {
         LevelsManager.OnLevelUp -= PlayWinSound;
+        PlayerController.OnHighHealth -= SwitchToMainTheme;
+        PlayerController.OnLowHealth -= SwitchToCombatTheme;
+        PlayerController.OnPlayerDeath -= SwitchToCombatTheme;
+
     }
 }

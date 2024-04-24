@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour
 {
     public bool gamePaused = false;
     public GameObject pauseMenu;
+    public GameObject defeatUI;
 
     private void Update()
     {
@@ -47,5 +48,22 @@ public class PauseMenu : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    private void HandleEndGame()
+    {
+        Debug.Log("HANDLING END GAME");
+        defeatUI.SetActive(true);
+    }
+
+    private void OnEnable()
+    {
+        PlayerController.OnPlayerDeath += HandleEndGame;
+
+    }
+    private void OnDisable()
+    {
+        PlayerController.OnPlayerDeath -= HandleEndGame;
+
     }
 }

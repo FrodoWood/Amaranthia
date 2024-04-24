@@ -31,7 +31,7 @@ public class Upgrade : MonoBehaviour, ISaveable
 
     public string GetName()
     {
-        return upgradeSO.name;
+        return upgradeSO.upgradeName;
     }
 
     public string GetDescription()

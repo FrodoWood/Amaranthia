@@ -14,6 +14,7 @@ public class SaveLoadManager : MonoBehaviour
     public static SaveLoadManager instance { get; private set; }
     public static event Action OnGameSave;
     public static event Action OnNewGame;
+    public static event Action OnLoadGame;
 
     public void Awake()
     {
@@ -68,6 +69,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         // Load saved game
         this.gameData = dataHandler.Load();
+        OnLoadGame?.Invoke();
 
         // if saved data cannot be loaded, then create a new game
         if(this.gameData == null)

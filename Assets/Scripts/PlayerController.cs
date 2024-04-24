@@ -40,6 +40,11 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     public float healthRegen;
     private bool insideTrigger;
     private bool saveTrigger = false;
+    public static event Action OnLowHealth;
+    public static event Action OnHighHealth;
+    public static event Action OnPlayerDeath;
+    private bool lowHealthTrigger = false;
+    private bool highHealthTrigger = true;
 
     private void Awake()
     {
@@ -58,6 +63,17 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     {
         healthbar.UpdateHealthbar(maxHealth, currentHealth);
         hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
+        if (currentHealth <= maxHealth * 0.6)
+        {
+            lowHealthTrigger = true;
+            highHealthTrigger = false;
+        }
+        else if (currentHealth > maxHealth * 0.6)
+        {
+            lowHealthTrigger = false;
+            highHealthTrigger = true;
+        }
+
 
         BaseAbility[] abilities = new BaseAbility[] { abilityQ, abilityW, abilityE, abilityR };
         uiAbility.Initialise(abilities);
@@ -72,7 +88,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
 
         CheckInteractInput();
 
-        HealthRegen();
+        if(currentState != PlayerState.Dead) HealthRegen();
     }
 
     private void CheckInteractInput()
@@ -334,6 +350,7 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
     private void OnEnterDead()
     {
         animator.SetTrigger("Dead");
+        OnPlayerDeath?.Invoke();
         agent.enabled = false;
         Collider coll= GetComponent<Collider>();
         if(coll != null) coll.enabled = false;
@@ -447,6 +464,13 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
 
+        if (currentHealth <= maxHealth * 0.6)
+        {
+            lowHealthTrigger = true;
+            highHealthTrigger = false;
+            OnLowHealth.Invoke();
+        }
+
         //Update UI
         healthbar.UpdateHealthbar(maxHealth, currentHealth);
         hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
@@ -487,6 +511,12 @@ public class PlayerController : MonoBehaviour, IDamageable, ISaveable
             currentHealth += healthRegen * Time.deltaTime;
             healthbar.UpdateHealthbar(maxHealth, currentHealth);
             hudHealthbar.UpdateHealthbar(maxHealth, currentHealth);
+            if(currentHealth > maxHealth*0.6)
+            {
+                highHealthTrigger = true;
+                lowHealthTrigger = false;
+                OnHighHealth.Invoke();
+            }
         }
     }
     public bool CurrentAnimationFinished()
