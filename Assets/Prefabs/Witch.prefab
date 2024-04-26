@@ -955,7 +955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  enemyData: {fileID: 11400000, guid: 88404281be561874d9535b1fa47d66bf, type: 2}
+  enemyData: {fileID: 11400000, guid: 218d20b79edba0b40a9e2a224298fcb2, type: 2}
   currentHealth: 0
   maxHealth: 0
   damage: 0
@@ -966,6 +966,7 @@ MonoBehaviour:
   patrolRadius: 20
   perlinScale: 3
   hasRagdoll: 0
+  destinationRequestInterval: 0.5
 --- !u!195 &8947641366672592706
 NavMeshAgent:
   m_ObjectHideFlags: 0

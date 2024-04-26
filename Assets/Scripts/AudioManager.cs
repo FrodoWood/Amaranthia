@@ -34,6 +34,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
+
     private void Start()
     {
         audioSources[0].Play();
@@ -41,7 +43,7 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-   
+
     }
 
     public void SmoothTransition(string clipName)
