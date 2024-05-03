@@ -274,7 +274,7 @@ public class ComplexEnemy : Enemy
         float z = Mathf.PerlinNoise(0f, Time.time * perlinScale) * 2f - 1f;
         Vector3 directionBias = (player.position - transform.position).normalized;
         Vector3 perlinDirection = new Vector3(x, 0f, z).normalized;
-        return Vector3.Lerp(perlinDirection, directionBias, 0.2f);
+        return Vector3.Lerp(perlinDirection, directionBias, 0.4f);
     }
 
     private void OnDrawGizmosSelected()

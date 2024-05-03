@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Spider
   maxHealth: 10
-  moveSpeed: 5
+  moveSpeed: 10
   damage: 5
-  visionRange: 20
+  visionRange: 30
   gemPrefab: {fileID: 8666244950991746138, guid: 0eebe952f4e327d4ab4bdec42993bf65,
     type: 3}

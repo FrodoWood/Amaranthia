@@ -61,6 +61,12 @@ public class AudioManager : MonoBehaviour
     private IEnumerator TransitionAudio(AudioClip newClip)
     {
         AudioSource currentSource = GetCurrentPlayingSource();
+        if (currentSource == null)
+        {
+            audioSources[0].Play();
+            audioSources[0].volume = 1.0f;
+            yield break;
+        }
         AudioSource newSource = audioSources.Find(source => source.clip == newClip);
 
         if(newSource == currentSource) yield break;
@@ -71,7 +77,7 @@ public class AudioManager : MonoBehaviour
         while(timer < transitionDuration)
         {
             float t = timer / transitionDuration;
-            currentSource.volume = Mathf.Lerp(0.5f, 0f, t);
+            currentSource.volume = Mathf.Lerp(initialVolume, 0f, t);
             newSource.volume = Mathf.Lerp(0f, 0.5f, t);
             timer += Time.deltaTime;
             yield return null;
@@ -84,7 +90,7 @@ public class AudioManager : MonoBehaviour
         AudioClip newClip = audioClips.Find(clip => clip.name == clipName);
         AudioSource newSource = audioSources.Find(source => source.clip == newClip);
         newSource.loop = false;
-        newSource.volume = GetCurrentPlayingSource().volume;
+        newSource.volume = 1;
         newSource.Play();
         //StartCoroutine(StopAudioAfter(newSource,newClip.length));
     }
