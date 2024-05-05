@@ -153,10 +153,11 @@ MonoBehaviour:
     type: 3}
   fireballExplodeSound: {fileID: 8300000, guid: 26d93439d29136f45a0ac9e33162011a,
     type: 3}
-  explosionVolume: 0.505
+  explosionVolume: 0.228
   fireballVolume: 0.461
   fireballMixerGroup: {fileID: 24300002, guid: 372a553b838d2904ca9122e34d8b6daa, type: 2}
   fireballEntityType: 0
+  canGoThrough: 1
 --- !u!1001 &2297100464143668562
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class AbilityQ : BaseAbility
     [SerializeField] private float baseDamage = 10f;
     [SerializeField] private float damage = 10f;
     [SerializeField] private GameObject fireballPrefab;
+    [SerializeField] private int fireballAmount;
 
     public override void TriggerAbility()
     {
@@ -19,7 +20,7 @@ public class AbilityQ : BaseAbility
         Vector3 initialProjectileSpawnPointHolderRotation = player.projectileSpawnPointHolder.rotation.eulerAngles;
         Vector3 holderRotation = player.projectileSpawnPointHolder.rotation.eulerAngles;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < fireballAmount; i++)
         {
             int sign = i%2 == 0 ? 1 : -1;
 

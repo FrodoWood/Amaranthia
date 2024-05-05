@@ -17,6 +17,7 @@ public class Fireball : MonoBehaviour
     public AudioMixerGroup fireballMixerGroup;
     public EntityType fireballEntityType;
     private bool canExplode = false;
+    public bool canGoThrough = false;
 
     void Start()
     {
@@ -93,14 +94,9 @@ public class Fireball : MonoBehaviour
         }
         
         IRagdoll ragdoll = other.gameObject.GetComponent<IRagdoll>();
-        if (ragdoll == null)
-        {
-            ragdoll = other.gameObject.GetComponentInParent<IRagdoll>();
-        }
-            ragdoll?.Explode(transform.forward, ForceMode.Impulse);
-
         if(ragdoll != null)
         {
+            ragdoll.Explode(transform.forward, ForceMode.Impulse);
             canExplode = true;
         }
 
@@ -109,7 +105,23 @@ public class Fireball : MonoBehaviour
             canExplode = true;
         }
 
-        if (canExplode)
+        if (canExplode && canGoThrough)
+        {
+            //Audio
+            GameObject audio = new GameObject("fireballExplodeSound");
+            AudioSource source = audio.AddComponent<AudioSource>();
+            source.clip = fireballExplodeSound;
+            source.spatialBlend = 0f;
+            source.playOnAwake = false;
+            source.volume = explosionVolume;
+            source.Play();
+            Destroy(audio, fireballExplodeSound.length);
+
+            // Hit Particles
+            GameObject collisionParticles = Instantiate(collisionParticlesPrefab, transform.position, Quaternion.identity);
+        }
+
+        else if (canExplode && !canGoThrough)
         {
             //Audio
             GameObject audio = new GameObject("fireballExplodeSound");
@@ -127,5 +139,6 @@ public class Fireball : MonoBehaviour
 
         }
 
+        canExplode = false;
     }
 }
