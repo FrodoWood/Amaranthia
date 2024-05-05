@@ -16,13 +16,26 @@ public class AbilityQ : BaseAbility
 
         Debug.Log(abilityName + " ability used!");
         base.TriggerAbility(); // Starts the cooldown timer and sets the ability on cooldown
-        GameObject newFireball = GameObject.Instantiate(fireballPrefab, player.projectileSpawnPoint.transform.position, Quaternion.identity);
-        Fireball fireball = newFireball.GetComponent<Fireball>();
-        fireball?.Setup(damage);
-        fireball.transform.forward = player.transform.forward;
-        Rigidbody fireballRigidbody = fireball.GetComponent<Rigidbody>();
-        fireballRigidbody?.AddForce(player.transform.forward * fireballSpeed, ForceMode.Impulse);
-        GameObject.Destroy(newFireball, 2f);
+        Vector3 initialProjectileSpawnPointHolderRotation = player.projectileSpawnPointHolder.rotation.eulerAngles;
+        Vector3 holderRotation = player.projectileSpawnPointHolder.rotation.eulerAngles;
+
+        for (int i = 0; i < 3; i++)
+        {
+            int sign = i%2 == 0 ? 1 : -1;
+
+            player.projectileSpawnPointHolder.Rotate(Vector3.up, 15 * sign * i);
+            Vector3 spawnPos = player.projectileSpawnPoint.transform.position;
+            GameObject newFireball = GameObject.Instantiate(fireballPrefab, spawnPos, Quaternion.identity);
+            Fireball fireball = newFireball.GetComponent<Fireball>();
+            fireball?.Setup(damage);
+            fireball.transform.forward = player.transform.forward;
+            Rigidbody fireballRigidbody = fireball.GetComponent<Rigidbody>();
+            Vector3 forceDir = player.projectileSpawnPoint.position - player.transform.position;
+            forceDir = new Vector3(forceDir.x, 0, forceDir.z).normalized;
+            fireballRigidbody?.AddForce(forceDir * fireballSpeed, ForceMode.Impulse);
+            GameObject.Destroy(newFireball, 2f);
+        }
+        player.projectileSpawnPointHolder.localRotation = Quaternion.identity;
 
     }
 

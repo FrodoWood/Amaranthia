@@ -16,6 +16,7 @@ public class Fireball : MonoBehaviour
     public float fireballVolume;
     public AudioMixerGroup fireballMixerGroup;
     public EntityType fireballEntityType;
+    private bool canExplode = false;
 
     void Start()
     {
@@ -40,42 +41,91 @@ public class Fireball : MonoBehaviour
         damage = fireballDamage;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.GetComponent<Fireball>() != null)
+    //    {
+    //        return;
+    //    }
+
+    //    IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+    //    if (damageable != null)
+    //    {
+    //        damageable.TakeDamage(damage, fireballEntityType);
+    //    }
+
+    //    //Audio
+    //    GameObject audio = new GameObject("fireballExplodeSound");
+    //    AudioSource source = audio.AddComponent<AudioSource>();
+    //    source.clip = fireballExplodeSound;
+    //    source.spatialBlend = 0f;
+    //    source.playOnAwake = false;
+    //    source.volume = explosionVolume;
+    //    source.Play();
+    //    Destroy(audio, fireballExplodeSound.length);
+
+    //    GameObject collisionParticles = Instantiate(collisionParticlesPrefab, transform.position, Quaternion.identity);
+
+
+    //    IRagdoll ragdoll = collision.gameObject.GetComponent<IRagdoll>();
+    //    if (ragdoll == null)
+    //    {
+    //        ragdoll = collision.gameObject.GetComponentInParent<IRagdoll>();
+    //        ragdoll?.Explode(transform.forward, ForceMode.Impulse);
+    //    }
+
+    //    Destroy(gameObject);
+    //}
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-        if(damageable != null)
+        if (other.gameObject.GetComponent<Fireball>() != null)
+        {
+            canExplode = false;
+        }
+
+        IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
+        if (damageable != null)
         {
             damageable.TakeDamage(damage, fireballEntityType);
-            Debug.Log("Damageable found!!!");
+            canExplode = true;
         }
-        //damageable?.TakeDamage(damage, fireballEntityType);
-
-        //Audio
-        GameObject audio = new GameObject("fireballExplodeSound");
-        AudioSource source = audio.AddComponent<AudioSource>();
-        source.clip = fireballExplodeSound;
-        source.spatialBlend = 0f;
-        source.playOnAwake = false;
-        //source.outputAudioMixerGroup = fireballMixerGroup;
-        source.volume = explosionVolume;
-        source.Play();
-        Destroy(audio, fireballExplodeSound.length);
-
-        GameObject collisionParticles = Instantiate(collisionParticlesPrefab, transform.position, Quaternion.identity);
-
-        if (collision.gameObject.CompareTag("Ground"))
+        
+        IRagdoll ragdoll = other.gameObject.GetComponent<IRagdoll>();
+        if (ragdoll == null)
         {
+            ragdoll = other.gameObject.GetComponentInParent<IRagdoll>();
+        }
+            ragdoll?.Explode(transform.forward, ForceMode.Impulse);
+
+        if(ragdoll != null)
+        {
+            canExplode = true;
+        }
+
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            canExplode = true;
+        }
+
+        if (canExplode)
+        {
+            //Audio
+            GameObject audio = new GameObject("fireballExplodeSound");
+            AudioSource source = audio.AddComponent<AudioSource>();
+            source.clip = fireballExplodeSound;
+            source.spatialBlend = 0f;
+            source.playOnAwake = false;
+            source.volume = explosionVolume;
+            source.Play();
+            Destroy(audio, fireballExplodeSound.length);
+
+            // Hit Particles
+            GameObject collisionParticles = Instantiate(collisionParticlesPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
+
         }
 
-
-        IRagdoll ragdoll = collision.gameObject.GetComponent<IRagdoll>();
-        if(ragdoll == null)
-        {
-            ragdoll = collision.gameObject.GetComponentInParent<IRagdoll>();
-        }
-        ragdoll?.Explode(transform.forward, ForceMode.Impulse);
-
-        Destroy(gameObject);
     }
 }
