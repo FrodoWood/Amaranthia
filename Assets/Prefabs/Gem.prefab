@@ -103,6 +103,8 @@ MonoBehaviour:
   verticalMotionOffset: 0.005
   gemPickup: {fileID: 8300000, guid: ca583055f38e2a84f97897f66c44f905, type: 3}
   gemPickupVolume: 0.065
+  moveTowardsTarget: 0
+  gemPickupSpeed: 40
 --- !u!135 &1682330143574144685
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -122,5 +124,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.95
+  m_Radius: 10.29
   m_Center: {x: 0, y: 0.87, z: 0}
