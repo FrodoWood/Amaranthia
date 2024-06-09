@@ -6,11 +6,6 @@ public class Upgrade : MonoBehaviour, ISaveable
 {
     public UpgradeSO upgradeSO;
     [SerializeField] private string id;
-    [ContextMenu("Generate GUID")]
-    private void GenerateGuid()
-    {
-        id = System.Guid.NewGuid().ToString();
-    }
     public bool isActivated = false;
 
     public void Initialise(PlayerStats _playerStats)
@@ -19,13 +14,11 @@ public class Upgrade : MonoBehaviour, ISaveable
     }
     private void Awake()
     {
-        if(id == "")
-        {
-            GenerateGuid();
-        }
+
     }
     private void Update()
     {
+        if (!isActivated) return;
         upgradeSO.OnUpdate();
     }
 

@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class SimpleEnemy : Enemy
 {
-    [SerializeField] private float patrolRadius = 20f;
+    [SerializeField] private float patrolRadius = 160f;
     [SerializeField] private float perlinScale = 3f;
     private Vector3 spawnPosition;
     private Color chaseColour = new Color(1f, 0f, 0f, 0.3f);
@@ -19,8 +19,12 @@ public class SimpleEnemy : Enemy
     public bool hasRagdoll = false;
     private Ragdoll ragdoll;
     private float smoothDampInjuredVelocity;
-    public float destinationRequestInterval = 0.5f;
+    private float destinationRequestInterval;
+    public float lowDestinationRequestInterval = 1f;
+    public float highDestinationRequestInterval = 5f;
+
     private float destinationRequestTimer = 0f;
+    public float navmeshThreshold = 150f;
 
     protected override void Start()
     {
@@ -36,6 +40,14 @@ public class SimpleEnemy : Enemy
         base.Update();
         UpdateInjuredLayerWeight();
         destinationRequestTimer -= Time.deltaTime;
+        if(Vector3.Distance(transform.position, player.transform.position) > navmeshThreshold)
+        {
+            destinationRequestInterval = highDestinationRequestInterval;
+        }
+        else
+        {
+            destinationRequestInterval = lowDestinationRequestInterval;
+        }
     }
 
     //IDLE

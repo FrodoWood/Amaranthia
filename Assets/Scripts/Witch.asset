@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Troll
   maxHealth: 40
-  moveSpeed: 6
+  moveSpeed: 10
   damage: 10
   visionRange: 40
   gemPrefab: {fileID: 8666244950991746138, guid: 247c6840511f3e04bb5a5386c5d942db,

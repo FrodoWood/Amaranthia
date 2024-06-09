@@ -1086,9 +1086,12 @@ MonoBehaviour:
   attackRange: 5
   attackCooldown: 2
   canAttack: 0
-  patrolRadius: 20
+  patrolRadius: 160
   perlinScale: 3
   hasRagdoll: 1
+  lowDestinationRequestInterval: 0.5
+  highDestinationRequestInterval: 4
+  navmeshThreshold: 150
 --- !u!195 &2864964551730880088
 NavMeshAgent:
   m_ObjectHideFlags: 0

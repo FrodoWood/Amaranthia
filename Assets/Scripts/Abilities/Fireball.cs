@@ -34,50 +34,12 @@ public class Fireball : MonoBehaviour
 
     void Update()
     {
-        Destroy(gameObject, 4f);
     }
 
     public void Setup(float fireballDamage)
     {
         damage = fireballDamage;
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.GetComponent<Fireball>() != null)
-    //    {
-    //        return;
-    //    }
-
-    //    IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-    //    if (damageable != null)
-    //    {
-    //        damageable.TakeDamage(damage, fireballEntityType);
-    //    }
-
-    //    //Audio
-    //    GameObject audio = new GameObject("fireballExplodeSound");
-    //    AudioSource source = audio.AddComponent<AudioSource>();
-    //    source.clip = fireballExplodeSound;
-    //    source.spatialBlend = 0f;
-    //    source.playOnAwake = false;
-    //    source.volume = explosionVolume;
-    //    source.Play();
-    //    Destroy(audio, fireballExplodeSound.length);
-
-    //    GameObject collisionParticles = Instantiate(collisionParticlesPrefab, transform.position, Quaternion.identity);
-
-
-    //    IRagdoll ragdoll = collision.gameObject.GetComponent<IRagdoll>();
-    //    if (ragdoll == null)
-    //    {
-    //        ragdoll = collision.gameObject.GetComponentInParent<IRagdoll>();
-    //        ragdoll?.Explode(transform.forward, ForceMode.Impulse);
-    //    }
-
-    //    Destroy(gameObject);
-    //}
-
 
     private void OnTriggerEnter(Collider other)
     {
