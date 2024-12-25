@@ -14,17 +14,12 @@ public class SimpleEnemy : Enemy
     private Vector3 spawnPosition;
     private Color chaseColour = new Color(1f, 0f, 0f, 0.3f);
     private Color patrolColour = new Color(0f, 1f, 0f, 0.3f);
-    public static event Action onDeath;
-    private GameObject gemPrefab;
     public bool hasRagdoll = false;
-    private Ragdoll ragdoll;
     private float smoothDampInjuredVelocity;
-    private float destinationRequestInterval;
-    public float lowDestinationRequestInterval = 1f;
-    public float highDestinationRequestInterval = 5f;
+    private Ragdoll ragdoll;
+    private GameObject gemPrefab;
 
-    private float destinationRequestTimer = 0f;
-    public float navmeshThreshold = 150f;
+    public static event Action onDeath;
 
     protected override void Start()
     {
@@ -33,21 +28,11 @@ public class SimpleEnemy : Enemy
         spawnPosition = transform.position + Random.insideUnitSphere * 2;
         canAttack = true;
         gemPrefab = enemyData.gemPrefab;
-        destinationRequestTimer = destinationRequestInterval;
     }
     protected override void Update()
     {
         base.Update();
         UpdateInjuredLayerWeight();
-        destinationRequestTimer -= Time.deltaTime;
-        if(Vector3.Distance(transform.position, player.transform.position) > navmeshThreshold)
-        {
-            destinationRequestInterval = highDestinationRequestInterval;
-        }
-        else
-        {
-            destinationRequestInterval = lowDestinationRequestInterval;
-        }
     }
 
     //IDLE
@@ -55,7 +40,6 @@ public class SimpleEnemy : Enemy
     {
         Debug.Log($"{enemyName} Entered Idle");
         animator.SetTrigger("Idle");
-        agent.ResetPath();
         StartCoroutine(ChangeStateAfter(EnemyState.Patrolling, 2f));
     }
     protected override void UpdateIdle()
@@ -76,32 +60,20 @@ public class SimpleEnemy : Enemy
     {
         Debug.Log($"{enemyName} Entered Patrolling");
         animator.SetTrigger("Patrolling");
-        agent.isStopped = false;
-        //agent.SetDestination(GetRandomNavMeshWayPoint(transform.position, 30f));
-        //StartCoroutine(ChangeStateAfter(EnemyState.Idle, 2f));
-
     }
     protected override void UpdatePatrolling()
     {
-        if(!agent.pathPending && (agent.remainingDistance - agent.stoppingDistance) < 0.1f && destinationRequestTimer <= 0f)
-        {
-            agent.SetDestination(GetRandomNavMeshWayPoint(transform.position, patrolRadius));
-            destinationRequestTimer = destinationRequestInterval;
-            if (Random.value < 0f) ChangeState(EnemyState.Idle);
-        }
         if (PlayerInRange() && !GameManager.instance.player.IsDead()) ChangeState(EnemyState.Chasing);
     }
     protected override void OnExitPatrolling()
     {
         Debug.Log($"{enemyName} Exited Patrolling");
-        agent.ResetPath();
     }
     
     //ATTACKING
     protected override void OnEnterAttacking()
     {
         Debug.Log($"{enemyName} Entered Attacking");
-        agent.ResetPath();
         // play attack animation
     }
     protected override void UpdateAttacking()
@@ -114,7 +86,6 @@ public class SimpleEnemy : Enemy
         if (canAttack && DistanceToPlayer() <= attackRange)
         {
             animator.SetTrigger("Attacking");
-            //AttackPlayer();
             canAttack = false;
             StartCoroutine(ResetAttack());
         }
@@ -144,26 +115,8 @@ public class SimpleEnemy : Enemy
     }
     protected override void UpdateChasing()
     {
-        if (PlayerInRange() && destinationRequestTimer <= 0)
-        {
-            lastKnownPlayerPosition = player.position;
-            agent.SetDestination(lastKnownPlayerPosition);
-            destinationRequestTimer = destinationRequestInterval;
-
-            if (DistanceToPlayer() <= attackRange)
-            {
-                ChangeState(EnemyState.Attacking);
-                return;
-            }
-        }
-        // If the player is out of range => the enemy should go to the last known position of the player and then switch to idle
-        if (!PlayerInRange() && (agent.remainingDistance - agent.stoppingDistance) < 0.5f)
-        {
-            ChangeState(EnemyState.Idle);
-            return;
-        }
-        
-
+        // TODO
+        // Always move towards the player
     }
     protected override void OnExitChasing()
     {
@@ -177,7 +130,6 @@ public class SimpleEnemy : Enemy
         Debug.Log($"{enemyName} Entered Dead");
         onDeath?.Invoke();
         animator.SetTrigger("Dead");
-        agent.enabled = false;
         myCollider.enabled = false;
         StopAllCoroutines();
         if(hasRagdoll)

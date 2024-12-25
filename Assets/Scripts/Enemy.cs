@@ -22,7 +22,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected string enemyName;
     public EnemyData enemyData;
     protected Transform player;
-    protected NavMeshAgent agent;
     protected Animator animator;
     protected Collider myCollider;
 
@@ -39,20 +38,19 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected virtual void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         myCollider = GetComponent<Collider>();
 
     }
     protected virtual void Start()
     {
-        ChangeState(EnemyState.Patrolling);
+        //ChangeState(EnemyState.Patrolling);
+        ChangeState(EnemyState.Chasing);
         
         // Setting scriptable object enemy data values
         enemyName = enemyData.name;
         maxHealth = enemyData.maxHealth;
         damage = enemyData.damage;
-        agent.speed = enemyData.moveSpeed;
         
         currentHealth = maxHealth;
         visionRange = enemyData.visionRange;
@@ -136,8 +134,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     }
     protected virtual void OnEnterChasing()
     {
-        agent.SetDestination(player.position);
-        lastKnownPlayerPosition = player.position;
+        //lastKnownPlayerPosition = player.position;
     }
     protected abstract void OnEnterPatrolling();
     protected abstract void OnEnterAttacking();
