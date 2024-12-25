@@ -14,7 +14,7 @@ public class Ragdoll : MonoBehaviour, IRagdoll
         colliders = GetComponentsInChildren<Collider>();
         foreach (Collider collider in colliders)
         {
-            PhysicMaterial material = new PhysicMaterial();
+            PhysicsMaterial material = new PhysicsMaterial();
             material.dynamicFriction = 2f;
             material.staticFriction = 2f;
             material.bounciness = 0f;
